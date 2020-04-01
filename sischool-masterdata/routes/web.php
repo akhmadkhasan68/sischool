@@ -20,6 +20,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/kelas', 'KelasController@index')->name('kelas');
+Route::post('/kelas', 'KelasController@ajax_action_add_kelas');
+
+Route::get('/jurusan', 'JurusanController@index');
+Route::get('/jurusan/tambah', 'JurusanController@add_jurusan');
+Route::post('/jurusan/tambah', 'JurusanController@proses_insert');
+
 Route::get('/siswa', 'SiswaController@index')->name('siswa');
+
 Route::get('/ortu', 'OrtuController@index')->name('ortu');

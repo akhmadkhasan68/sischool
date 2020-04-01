@@ -153,15 +153,15 @@
                                 </a>
                             </li> 
                             <li>
-                                <a href="{{ url('kelas')}}" class="@if($nav_active == 'kelas') mm-active @endif">
-                                    <i class="metismenu-icon pe-7s-id"></i>
-                                    Data Kelas
-                                </a>
-                            </li> 
-                            <li>
                                 <a href="{{ url('jurusan')}}" class="@if($nav_active == 'jurusan') mm-active @endif">
                                     <i class="metismenu-icon pe-7s-link"></i>
                                     Data Jurusan
+                                </a>
+                            </li> 
+                            <li>
+                                <a href="{{ url('kelas')}}" class="@if($nav_active == 'kelas') mm-active @endif">
+                                    <i class="metismenu-icon pe-7s-id"></i>
+                                    Data Kelas
                                 </a>
                             </li> 
                             <li>
@@ -257,6 +257,8 @@
             @yield('content')
 
         </div>
+        
+        @yield('modal')
 
         <div class="app-wrapper-footer" style="display: none">
             <div class="app-footer">
@@ -301,6 +303,7 @@
     <script src="{{asset('js/sweetalert2.min.js')}}"></script>
     <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('js/dataTables.bootstrap4.min.js')}}"></script>
+    @yield('js')
     <script type="text/javascript">
         $(document).ready(function() {
             $(".loader").fadeOut();
@@ -320,8 +323,6 @@
                     event.preventDefault(); document.getElementById('logout-form').submit();
                 }
             })
-
-
         });    
     </script>
 </body>
