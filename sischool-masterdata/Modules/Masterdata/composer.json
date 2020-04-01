@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/masterdata",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Masterdata\\Providers\\MasterdataServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Masterdata\\": ""
+        }
+    }
+}
