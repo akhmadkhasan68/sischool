@@ -21,7 +21,7 @@ class JurusanController extends Controller
         return view('jurusan.add_jurusan', $data);
     }
 
-    public function proses_insert(Request $request)
+    public function ajax_action_add_jurusan(Request $request)
     {
         $jurusan = DB::table('table_jurusan')->insert(
             array(
@@ -30,6 +30,6 @@ class JurusanController extends Controller
             )
         );
 
-        return redirect('/jurusan');
+        return redirect('/jurusan')->with('message', 'Berhasil menambahkan data jurusan!!');;
     }
 }

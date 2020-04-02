@@ -29,7 +29,7 @@ Route::get('/kelas/ajax_get_kelas_by_id', 'KelasController@ajax_get_kelas_by_id'
 
 Route::get('/jurusan', 'JurusanController@index');
 Route::get('/jurusan/tambah', 'JurusanController@add_jurusan');
-Route::post('/jurusan/tambah', 'JurusanController@proses_insert');
+Route::post('/jurusan/tambah', 'JurusanController@ajax_action_add_jurusan');
 
 Route::get('/siswa', 'SiswaController@index')->name('siswa');
 
