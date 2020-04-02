@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/kelas', 'KelasController@index')->name('kelas');
 Route::post('/kelas', 'KelasController@ajax_action_add_kelas');
+Route::delete('/kelas', 'KelasController@ajax_action_delete_kelas');
 
 Route::get('/jurusan', 'JurusanController@index');
 Route::get('/jurusan/tambah', 'JurusanController@add_jurusan');

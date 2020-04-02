@@ -104,7 +104,7 @@
                                                     <td>{{ $row->wali_kelas }}</td>
                                                     <td>
                                                         <button class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Ubah</button>
-                                                        <button class="btn btn-sm btn-danger" onclick="deleteKelas('halo')"><i class="fa fa-trash"></i> Hapus</button>
+                                                        <button class="btn btn-sm btn-danger" onclick="deleteKelas('{{ $row->id }}')"><i class="fa fa-trash"></i> Hapus</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -120,6 +120,12 @@
     </div>
 </div>
 <!-- END CONTENT -->
+
+<form id="form-delete">
+    @csrf
+    @method('delete')
+    <input type="hidden" name="id_kelas" id="id-kelas">
+</form>
 @endsection
 
 @section('modal')
@@ -243,7 +249,7 @@
         });
     });
     
-    function deleteKelas(kelas){
+    function deleteKelas(id){
         Swal.fire({
             title: 'Apakah anda ingin menghapus ?',
             text: "Anda akan yakin akan menghapus data kelas ini",
@@ -255,7 +261,41 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.value) {
-                alert(kelas);
+                // form-delete
+                $("#id-kelas").val(id);
+                var data = $("#form-delete").serialize();
+                $.ajax({
+                    url: '{{ url("kelas") }}',
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    beforeSend: function(){
+                        $(".loader").show();
+                    },
+                    success: function(response){
+                        $(".loader").hide();
+                        if(response.result == true){
+                            Swal.fire(
+                                response.message.head,
+                                response.message.body,
+                                'success'
+                            );
+
+                            window.location.href = response.redirect;
+                        }else{
+                            Swal.fire(
+                                response.message.head,
+                                response.message.body,
+                                'success'
+                            );
+
+                            window.location.href = response.redirect;
+                        }
+                    },
+                    error: function(){
+                        alert('Error Data!');
+                    }
+                });
             }
         })
     }
