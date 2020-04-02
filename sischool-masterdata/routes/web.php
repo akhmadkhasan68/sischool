@@ -23,7 +23,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/kelas', 'KelasController@index')->name('kelas');
 Route::post('/kelas', 'KelasController@ajax_action_add_kelas');
+Route::patch('/kelas', 'KelasController@ajax_action_edit_kelas');
 Route::delete('/kelas', 'KelasController@ajax_action_delete_kelas');
+Route::get('/kelas/ajax_get_kelas_by_id', 'KelasController@ajax_get_kelas_by_id');
 
 Route::get('/jurusan', 'JurusanController@index');
 Route::get('/jurusan/tambah', 'JurusanController@add_jurusan');

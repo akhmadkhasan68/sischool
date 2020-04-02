@@ -103,7 +103,7 @@
                                                     <td>{{ $row->jurusan_kelas }}</td>
                                                     <td>{{ $row->wali_kelas }}</td>
                                                     <td>
-                                                        <button class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Ubah</button>
+                                                        <button class="btn btn-sm btn-success" onclick="editKelas('{{ $row->id }}')"><i class="fa fa-edit"></i> Ubah</button>
                                                         <button class="btn btn-sm btn-danger" onclick="deleteKelas('{{ $row->id }}')"><i class="fa fa-trash"></i> Hapus</button>
                                                     </td>
                                                 </tr>
@@ -207,6 +207,88 @@
         </div>
     </div>
 </div>
+
+<button id="edit-kelas-btn" data-toggle="modal" data-target=".edit-kelas" style="display:none;"></button>
+<div class="modal fade edit-kelas" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Kelas <span id="judul-kelas"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="edit-kelas">
+                @csrf()
+                @method('patch')
+                <input type="hidden" name="id_kelas" id="id_kelas_edit">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="kode_kelas_edit" class="">Kode Kelas</label>
+                                <input name="kode_kelas" id="kode_kelas_edit" placeholder="Kode Kelas" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="nama_kelas_edit" class="">Nama Kelas</label>
+                                <input name="nama_kelas" id="nama_kelas_edit" placeholder="Nama Kelas" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="tingkat_kelas_edit" class="">Tingkatan Kelas</label>
+                                <select name="tingkat_kelas" id="tingkat_kelas_edit" class="form-control">
+                                    <option value="0">Tingkat Kelas</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="jurusan_kelas_edit" class="">Jurusan</label>
+                                <select name="jurusan_kelas" id="jurusan_kelas_edit" class="form-control">
+                                    <option value="0">Jurusan</option>
+                                    <option value="IPA">IPA</option>
+                                    <option value="IPS">IPS</option>
+                                    <option value="BAHASA">BAHASA</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-relative form-check">
+                        <input name="check" id="pilih-walikelas" type="checkbox" class="form-check-input">
+                        <label for="pilih-walikelas" class="form-check-label">Pilih wali kelas untuk kelas ini</label>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col-md-12">
+                            <div class="position-relative form-group">
+                                <label for="wali_kelas_edit" class="">Pilih Wali Kelas</label>
+                                <select name="wali_kelas" id="wali_kelas_edit" class="form-control">
+                                    <option value="0">Wali Kelas</option>
+                                    <option value="Rulita Octania, S.Pd.">Rulita Octania, S.Pd.</option>
+                                    <option value="Retnowati Dijah Hasfiani, S.Pd.">Retnowati Dijah Hasfiani, S.Pd.</option>
+                                    <option value="Rina Kartika, SS.,M.Pd">Rina Kartika, SS.,M.Pd</option>
+                                    <option value="Wahyu Windari, M.Pd.">Wahyu Windari, M.Pd.</option>
+                                    <option value="Kartini, M.Pd.">Kartini, M.Pd.</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Ubah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -215,6 +297,44 @@
         e.preventDefault();
         var data = $(this).serialize();
 
+        $.ajax({
+            url: '{{ url("kelas") }}',
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            beforeSend: function(){
+                $(".loader").show();
+            },
+            success: function(response){
+                $(".loader").hide();
+                if(response.result == true){
+                    Swal.fire(
+                        response.message.head,
+                        response.message.body,
+                        'success'
+                    );
+
+                    window.location.href = response.redirect;
+                }else{
+                    Swal.fire(
+                        response.message.head,
+                        response.message.body,
+                        'success'
+                    );
+
+                    window.location.href = response.redirect;
+                }
+            },
+            error: function(){
+                alert('Error Data!');
+            }
+        });
+    });
+
+    $("#edit-kelas").submit(function(e){
+        e.preventDefault();
+        var data = $(this).serialize();
+        
         $.ajax({
             url: '{{ url("kelas") }}',
             method: 'POST',
@@ -298,6 +418,33 @@
                 });
             }
         })
+    }
+
+    function editKelas(id)
+    {  
+        $.ajax({
+            url: '{{ url("kelas/ajax_get_kelas_by_id") }}',
+            method: 'GET',
+            data: {id: id},
+            dataType: 'json',
+            beforeSend: function(){
+                $(".loader").show();
+            },
+            success: function(response){
+                $(".loader").hide();
+                $("#edit-kelas-btn").trigger('click');
+                $("#judul-kelas").html(response.data.nama_kelas);
+                $("#kode_kelas_edit").val(response.data.kode_kelas);
+                $("#nama_kelas_edit").val(response.data.nama_kelas);
+                $("#tingkat_kelas_edit").val(response.data.tingkat_kelas);
+                $("#jurusan_kelas_edit").val(response.data.jurusan_kelas);
+                $("#wali_kelas_edit").val(response.data.wali_kelas);
+                $("#id_kelas_edit").val(response.data.id);
+            },
+            error: function(){
+                alert('Error Data!');
+            }
+        });
     }
 </script>
 @endsection

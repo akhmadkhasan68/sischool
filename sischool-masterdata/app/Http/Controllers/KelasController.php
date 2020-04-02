@@ -53,6 +53,38 @@ class KelasController extends Controller
         return json_encode($json_data);
     }
 
+    public function ajax_action_edit_kelas(Request $request)
+    {
+        $kelas = Kelas::find($request->id_kelas);
+        $kelas->kode_kelas = $request->kode_kelas;
+        $kelas->nama_kelas = $request->nama_kelas;
+        $kelas->tingkat_kelas = $request->tingkat_kelas;
+        $kelas->jurusan_kelas = $request->jurusan_kelas;
+        $kelas->wali_kelas = $request->wali_kelas;
+        $kelas->save();
+
+        if(!$kelas)
+        {
+            $json_data = [
+                'result' => false,
+                'form_error' => '',
+                'message' => ['head' => 'Gagal', 'body' => 'Ada kesalahan saat mengubah data. Lakukan beberapa saat lagi!'],
+                'redirect' => ''
+            ];
+            return json_encode($json_data);
+            die();
+        }
+
+        $json_data = [
+            'result' => true,
+            'form_error' => '',
+            'message' => ['head' => 'Berhasil', 'body' => 'Berhasil mengubah data kelas!'],
+            'redirect' => '/kelas'
+        ];
+
+        return json_encode($json_data);
+    }
+
     public function ajax_action_delete_kelas(Request $request)
     {
         $delete = Kelas::destroy($request->id_kelas);
@@ -76,6 +108,16 @@ class KelasController extends Controller
             'redirect' => '/kelas'
         ];
 
+        return json_encode($json_data);
+    }
+
+    public function ajax_get_kelas_by_id(Request $request)
+    {
+        $row = Kelas::find($request->id);
+        $json_data = [
+            'result' => true,
+            'data' => $row
+        ];
         return json_encode($json_data);
     }
 }
