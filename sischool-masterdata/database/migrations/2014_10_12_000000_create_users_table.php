@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('level', ['ADMIN', 'OPERATOR']);
             $table->tinyInteger('si_masterdata')->default('1');
             $table->timestamps();
         });

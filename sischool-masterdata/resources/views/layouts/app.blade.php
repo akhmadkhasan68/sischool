@@ -192,22 +192,22 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="" @if($nav_active == 'guru' || $nav_active == 'jadwal_guru') aria-expanded="true" @endif>
+                                <a href="" @if($nav_active == 'guru' || $nav_active == 'mapel_guru') aria-expanded="true" @endif>
                                     <i class="metismenu-icon pe-7s-users"></i>
                                     Guru
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
-                                <ul class="@if($nav_active == 'guru' || $nav_active == 'jadwal_guru') mm-show mm-collapse @endif">
+                                <ul class="@if($nav_active == 'guru' || $nav_active == 'mapel_guru') mm-show mm-collapse @endif">
                                     <li>
-                                        <a href="{{ url('siswa') }}" class="@if($nav_active == 'guru') mm-active @endif">
+                                        <a href="{{ url('guru') }}" class="@if($nav_active == 'guru') mm-active @endif">
                                             <i class="metismenu-icon"></i>
                                             Data Guru
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('ortu') }}" class="@if($nav_active == 'jadwal_guru') mm-active @endif">
+                                        <a href="{{ url('mapel_guru') }}" class="@if($nav_active == 'mapel_guru') mm-active @endif">
                                             <i class="metismenu-icon"></i>
-                                            Jadwal Guru
+                                            Mata Pelajaran Guru
                                         </a>
                                     </li>
                                 </ul>
