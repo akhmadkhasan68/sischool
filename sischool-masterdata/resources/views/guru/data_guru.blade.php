@@ -104,19 +104,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" id="tambah-kelas">
+            <form method="post" id="tambah-guru">
                 @csrf()
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="position-relative form-group">
-                                <label for="nama_guru" class="">Nama</label>
+                                <label for="nama_guru" class="">Nama</label> <label class="text-danger">*</label>
                                 <input name="nama_guru" id="nama_guru" placeholder="Nama" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="position-relative form-group">
-                                <label for="nip_guru" class="">NIP</label>
+                                <label for="nip_guru" class="">NIP</label> <label class="text-danger">*</label>
                                 <input name="nip_guru" id="nip_guru" placeholder="NIP Guru" type="text" class="form-control">
                             </div>
                         </div>
@@ -124,13 +124,13 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="position-relative form-group">
-                                <label for="username" class="">Username</label>
+                                <label for="username" class="">Username</label> <label class="text-danger">*</label>
                                 <input name="username" id="username" placeholder="Username" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="position-relative form-group">
-                                <label for="password" class="">Password</label>
+                                <label for="password" class="">Password</label> <label class="text-danger">*</label>
                                 <input name="password" id="password" placeholder="Password" type="password" class="form-control">
                                 <input type="checkbox" id="password-nip" class="mt-2"> Password samakan dengan NIP
                             </div>
@@ -139,13 +139,13 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="position-relative form-group">
-                                <label for="username" class="">Email</label>
+                                <label for="username" class="">Email</label> <label class="text-danger">*</label>
                                 <input name="email" id="email" placeholder="Email" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="position-relative form-group">
-                                <label for="no_guru" class="">Nomor Telepon</label>
+                                <label for="no_guru" class="">Nomor Telepon</label> <label class="text-danger">*</label>
                                 <input name="no_guru" id="no_guru" placeholder="Nomor Telepon" type="text" class="form-control">
                             </div>
                         </div>
@@ -153,17 +153,17 @@
                     <div class="form-row">
                         <div class="col-md-12">
                             <div class="position-relative form-group">
-                                <label for="alamat_guru" class="">Alamat</label>
+                                <label for="alamat_guru" class="">Alamat</label> <label class="text-danger">*</label>
                                 <textarea name="alamat_guru" id="alamat_guru" cols="30" rows="5" class="form-control" placeholder="Alamat Guru"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-6">
-                            <div class="position-relative form-group">
-                                <label for="kota_guru" class="">Kota/Kabupaten</label>
+                            <div class="position-relative form-group"> 
+                                <label for="kota_guru" class="">Kota/Kabupaten</label> <label class="text-danger">*</label>
                                 <select name="kota_guru" id="kota_guru" class="form-control">
-                                    <option value="0">Kota/Kabupaten</option>
+                                    <option value="">Kota/Kabupaten</option>
                                     <option value="Malang">Malang</option>
                                     <option value="Kabupaten Malang">Kabupaten Malang</option>
                                 </select>
@@ -171,12 +171,20 @@
                         </div>
                         <div class="col-md-6">
                             <div class="position-relative form-group">
-                                <label for="kecamatan_guru" class="">Kecamatan</label>
+                                <label for="kecamatan_guru" class="">Kecamatan</label> <label class="text-danger">*</label>
                                 <select name="kecamatan_guru" id="kecamatan_guru" class="form-control">
-                                    <option value="0">Kecamatan</option>
+                                    <option value="">Kecamatan</option>
                                     <option value="Pakis">Pakis</option>
                                     <option value="Blimbing">Blimbing</option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="position-relative form-group">
+                                <label for="foto_guru" class="">Foto</label> <label class="text-danger">*</label>
+                                <input type="file" name="foto_guru" class="form-control" id="foto_guru">
                             </div>
                         </div>
                     </div>
@@ -189,4 +197,59 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script>
+        $("#password-nip").on('change', function(){
+            if ($(this).is(':checked')) {
+                var nip = $("#nip_guru").val();
+                $("#password").val(nip);
+            }else{
+                $("#password").val("");
+            }
+        });
+
+        $("#tambah-guru").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '{{ url("guru") }}',
+                method:"post",
+                dataType: 'json',
+                data:new FormData(this),
+                processData:false,
+                contentType:false,
+                cache:false,
+                async:false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
+                success: function(response){
+                    $(".loader").hide();
+                    
+                    // if(response.result == false)
+                    // {
+                    //     message(response.message.head, response.message.body, "error", "info");
+                    // }
+
+                    // if(response.result == true)
+                    // {
+                    //     message(response.message.head, response.message.body, "success", "info", 1000);
+                    //     setInterval(function(){ 
+                    //         window.location.replace(base_url + response.redirect);
+                    //     }, 1000);
+                    // }
+                    console.log(response);
+                    var form_error = response.form_error;
+                    for(i = 0; i < form_error.length; i++){
+                        console.log(form_error[i]);
+                        toastr.error(form_error[i], response.message.head);
+                    }
+                },
+                error: function(){
+                    alert("Error Data!");
+                }
+            });
+        });
+    </script>
 @endsection

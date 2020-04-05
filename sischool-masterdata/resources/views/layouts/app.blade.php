@@ -13,6 +13,8 @@
     <script src="{{asset('js/jquary.min.js')}}"></script>
     <link href="{{asset('css/main.css')}}" rel="stylesheet">
     <link href="{{asset('css/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/toastr.css')}}" rel="stylesheet">
+    <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet">
 </head>
 <style>
     .loader {
@@ -213,26 +215,26 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="" @if($nav_active == 'guru' || $nav_active == 'jadwal_guru') aria-expanded="true" @endif>
+                                <a href="" @if($nav_active == '' || $nav_active == '') aria-expanded="true" @endif>
                                     <i class="metismenu-icon pe-7s-settings"></i>
                                     Pengaturan
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
-                                <ul class="@if($nav_active == 'guru' || $nav_active == 'jadwal_guru') mm-show mm-collapse @endif">
+                                <ul class="@if($nav_active == '' || $nav_active == '') mm-show mm-collapse @endif">
                                     <li>
-                                        <a href="{{ url('ortu') }}" class="@if($nav_active == 'jadwal_guru') mm-active @endif">
+                                        <a href="{{ url('ortu') }}" class="@if($nav_active == '') mm-active @endif">
                                             <i class="metismenu-icon"></i>
                                             Pengaturan Akun
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('ortu') }}" class="@if($nav_active == 'jadwal_guru') mm-active @endif">
+                                        <a href="{{ url('ortu') }}" class="@if($nav_active == '') mm-active @endif">
                                             <i class="metismenu-icon"></i>
                                             Pengaturan Sekolah
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('siswa') }}" class="@if($nav_active == 'guru') mm-active @endif">
+                                        <a href="{{ url('siswa') }}" class="@if($nav_active == '') mm-active @endif">
                                             <i class="metismenu-icon"></i>
                                             Pengaturan Hak Akses
                                         </a>
@@ -303,8 +305,20 @@
     <script src="{{asset('js/sweetalert2.min.js')}}"></script>
     <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('js/toastr.min.js')}}"></script>
     @yield('js')
     <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "progressBar": true,
+            'timeOut': 0,
+            'extendedTimeOut': 0,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
         $(document).ready(function() {
             $(".loader").fadeOut();
         });
