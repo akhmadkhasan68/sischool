@@ -90,7 +90,7 @@
                                                 <td>
                                                     <button class="btn btn-primary btn-sm" onclick="detail({{ $row->id }})"><i class="fa fa-info"></i> Detail</button>
                                                     <button class="btn btn-success btn-sm" onclick="edit({{ $row->id }})"><i class="fa fa-edit"></i> Ubah</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $row->id }})"><i class="fa fa-trash"></i> Hapus</button>
+                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $row->id_user }})"><i class="fa fa-trash"></i> Hapus</button>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -105,6 +105,12 @@
         </div>
     </div>
 </div>
+
+<form id="form-delete">
+    @csrf
+    @method('delete')
+    <input type="hidden" name="id" id="id-user">
+</form>
 @endsection
 
 @section('modal')
@@ -225,7 +231,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Detail Guru <span id="guru-title"></span></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Detail Guru</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -267,7 +273,7 @@
 
                     var html = `
                     <div class="row">
-                        <div class="col-md-6 mr-md-auto my-2">
+                        <div class="col-md-7 mr-md-auto my-2">
                             <b>Nama:</b> `+ response.data.nama_guru +`
                             <br>
                             <b>NIP:</b> `+ response.data.nip_guru +`
@@ -286,7 +292,7 @@
                             <br>
                             <b>Kota/Kabupaten:</b> `+ response.data.kota_guru +`
                         </div>
-                        <div class="col-md-4 ml-md-auto">
+                        <div class="col-md-5 ml-md-auto">
                             <div class="main-card my-2 card">
                                 <div class="card-body">
                                     <img src="`+ images +`" class="rounded img-fluid img-thumbnail">
@@ -297,7 +303,6 @@
                     `;
 
                     $("#detail-button").click();
-                    $("#guru-title").html(response.data.nama_guru);
                     $("#body-detail").html(html);
                 },
                 error: function(){
@@ -328,7 +333,54 @@
 
         function hapus(id)
         {
-            alert(id);
+            Swal.fire({
+                title: 'Apakah anda ingin menghapus ?',
+                text: "Anda akan yakin akan menghapus data guru ini",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#f5365c',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.value) {
+                    // form-delete
+                    $("#id-user").val(id);
+                    var data = $("#form-delete").serialize();
+                    $.ajax({
+                        url: '{{ url("guru") }}',
+                        method: 'POST',
+                        data: data,
+                        dataType: 'json',
+                        beforeSend: function(){
+                            $(".loader").show();
+                        },
+                        success: function(response){
+                            $(".loader").hide();
+                            if(response.result == true){
+                                Swal.fire(
+                                    response.message.head,
+                                    response.message.body,
+                                    'success'
+                                );
+
+                                window.location.href = response.redirect;
+                            }else{
+                                Swal.fire(
+                                    response.message.head,
+                                    response.message.body,
+                                    'error'
+                                );
+
+                                //window.location.href = response.redirect;
+                            }
+                        },
+                        error: function(){
+                            alert('Error Data!');
+                        }
+                    });
+                }
+            })
         }
 
         $("#password-nip").on('change', function(){
@@ -383,14 +435,6 @@
                     alert("Error Data!");
                 }
             });
-        });
-
-        $("img").mousedown(function(e){
-            e.preventDefault()
-        });
-
-        $("img").on("contextmenu",function(e){
-            return false;
         });
     </script>
 @endsection

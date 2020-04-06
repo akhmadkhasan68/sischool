@@ -172,4 +172,31 @@ class GuruController extends Controller
         ];
         return json_encode($json_data);
     }
+
+    public function ajax_action_delete_guru(Request $request)
+    {
+        $delete_guru = Guru::where('id_user', $request->id)->delete();
+        $delete_user = User::destroy($request->id);
+
+        if(!$delete_guru || !$delete_user)
+        {   
+            $json_data = [
+                'result' => false,
+                'form_error' => '',
+                'message' => ['head' => 'Gagal', 'body' => 'Ada kesalahan saat menghapus data. Lakukan beberapa saat lagi!'],
+                'redirect' => ''
+            ];
+            return json_encode($json_data);
+            die();
+        }
+
+        $json_data = [
+            'result' => true,
+            'form_error' => '',
+            'message' => ['head' => 'Berhasil', 'body' => 'Berhasil menghapus data guru!'],
+            'redirect' => '/guru'
+        ];
+
+        return json_encode($json_data);
+    }
 }

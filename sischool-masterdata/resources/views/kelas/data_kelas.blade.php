@@ -406,10 +406,10 @@
                             Swal.fire(
                                 response.message.head,
                                 response.message.body,
-                                'success'
+                                'error'
                             );
 
-                            window.location.href = response.redirect;
+                            //window.location.href = response.redirect;
                         }
                     },
                     error: function(){
