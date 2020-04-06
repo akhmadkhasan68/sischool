@@ -160,4 +160,16 @@ class GuruController extends Controller
 
         return json_encode($json_data);
     }
+
+    public function ajax_get_guru_by_id(Request $request)
+    {
+        $row = Guru::where('table_guru.id', $request->id)
+                        ->Join('users', 'users.id', '=', 'table_guru.id_user')
+                        ->first();
+        $json_data = [
+            'result' => true,
+            'data' => $row
+        ];
+        return json_encode($json_data);
+    }
 }

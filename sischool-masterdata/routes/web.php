@@ -42,3 +42,4 @@ Route::get('/ortu', 'OrtuController@index')->name('ortu');
 //ROUTE FOR GURU
 Route::get('/guru', 'GuruController@index')->name('guru');
 Route::post('/guru', 'GuruController@ajax_action_add_guru');
+Route::get('/guru/ajax_get_guru_by_id', 'GuruController@ajax_get_guru_by_id');

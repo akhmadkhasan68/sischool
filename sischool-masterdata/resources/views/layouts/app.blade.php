@@ -319,6 +319,7 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
+        
         $(document).ready(function() {
             $(".loader").fadeOut();
         });

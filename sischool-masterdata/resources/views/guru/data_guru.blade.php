@@ -88,9 +88,9 @@
                                                 </td>
                                                 <td>{{ $row->no_guru }}</td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm"><i class="fa fa-info"></i> Detail</button>
-                                                    <button class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Ubah</button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Hapus</button>
+                                                    <button class="btn btn-primary btn-sm" onclick="detail({{ $row->id }})"><i class="fa fa-info"></i> Detail</button>
+                                                    <button class="btn btn-success btn-sm" onclick="edit({{ $row->id }})"><i class="fa fa-edit"></i> Ubah</button>
+                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $row->id }})"><i class="fa fa-trash"></i> Hapus</button>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -218,10 +218,119 @@
         </div>
     </div>
 </div>
+
+<button class="btn btn-primary btn-block" data-toggle="modal" data-target=".detail-guru" id="detail-button" style="display:none;"><i class="fa fa-plus"></i> Detail Data Guru</button>
+
+<div class="modal fade detail-guru" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Detail Guru <span id="guru-title"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="body-detail">
+                
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
     <script>
+        function detail(id)
+        {
+            $.ajax({
+                url: '{{ url("guru/ajax_get_guru_by_id") }}',
+                method: 'GET',
+                data: {id: id},
+                dataType: 'json',
+                beforeSend: function(){
+                    $(".loader").show();
+                },
+                success: function(response){
+                    $(".loader").hide();
+
+                    if(response.data.foto_guru != ""){
+                        var images =  'uploads/photos/' + response.data.foto_guru;
+                    }else{
+                        var images =  'images/avatars/default.jpg';
+                    }
+
+                    if(response.data.jk_guru == "L"){
+                        var jenkel = 'Laki-laki';
+                    }else{
+                        var jenkel = 'Perempuan';
+                    }
+
+                    var html = `
+                    <div class="row">
+                        <div class="col-md-6 mr-md-auto my-2">
+                            <b>Nama:</b> `+ response.data.nama_guru +`
+                            <br>
+                            <b>NIP:</b> `+ response.data.nip_guru +`
+                            <br>
+                            <b>Jenis Kelamin:</b> `+ jenkel +`
+                            <br>
+                            <b>Nomor Telepon:</b> `+ response.data.no_guru +`
+                            <br>
+                            <b>Email:</b> `+ response.data.email +`
+                            <br>
+                            <b>Username:</b> `+ response.data.username +`
+                            <br>
+                            <b>Alamat:</b> `+ response.data.alamat_guru +`
+                            <br>
+                            <b>Kecamatan:</b> `+ response.data.kecamatan_guru +`
+                            <br>
+                            <b>Kota/Kabupaten:</b> `+ response.data.kota_guru +`
+                        </div>
+                        <div class="col-md-4 ml-md-auto">
+                            <div class="main-card my-2 card">
+                                <div class="card-body">
+                                    <img src="`+ images +`" class="rounded img-fluid img-thumbnail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+
+                    $("#detail-button").click();
+                    $("#guru-title").html(response.data.nama_guru);
+                    $("#body-detail").html(html);
+                },
+                error: function(){
+                    alert('Error Data!');
+                }
+            });
+        }
+
+        function edit(id)
+        {
+            $.ajax({
+                url: '{{ url("guru/ajax_get_guru_by_id") }}',
+                method: 'GET',
+                data: {id: id},
+                dataType: 'json',
+                beforeSend: function(){
+                    $(".loader").show();
+                },
+                success: function(response){
+                    $(".loader").hide();
+                    console.log(response);
+                },
+                error: function(){
+                    alert('Error Data!');
+                }
+            });
+        }
+
+        function hapus(id)
+        {
+            alert(id);
+        }
+
         $("#password-nip").on('change', function(){
             if ($(this).is(':checked')) {
                 var nip = $("#nip_guru").val();
@@ -274,6 +383,14 @@
                     alert("Error Data!");
                 }
             });
+        });
+
+        $("img").mousedown(function(e){
+            e.preventDefault()
+        });
+
+        $("img").on("contextmenu",function(e){
+            return false;
         });
     </script>
 @endsection
