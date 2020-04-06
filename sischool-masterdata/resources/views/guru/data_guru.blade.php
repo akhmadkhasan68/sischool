@@ -73,14 +73,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $no = 1 ?>
+                                            @foreach($result as $row)
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $row->nama_guru }}</td>
+                                                <td>{{ $row->nip_guru }}</td>
+                                                <td>
+                                                    @if($row->jk_guru == "L")
+                                                        Laki - laki
+                                                    @else
+                                                        Perempuan
+                                                    @endif
+                                                </td>
+                                                <td>{{ $row->no_guru }}</td>
+                                                <td>
+                                                    <button class="btn btn-primary btn-sm"><i class="fa fa-info"></i> Detail</button>
+                                                    <button class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Ubah</button>
+                                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Hapus</button>
+                                                </td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -118,6 +131,14 @@
                             <div class="position-relative form-group">
                                 <label for="nip_guru" class="">NIP</label> <label class="text-danger">*</label>
                                 <input name="nip_guru" id="nip_guru" placeholder="NIP Guru" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="position-relative form-group">
+                                <label for="jk_guru" class="">Jenis Kelamin</label> <label class="text-danger">*</label><br>
+                                <input type="radio" name="jk_guru" value="L"> Laki - laki &nbsp; <input type="radio" name="jk_guru" value="P"> Perempuan
                             </div>
                         </div>
                     </div>
@@ -183,7 +204,7 @@
                     <div class="form-row">
                         <div class="col-md-12">
                             <div class="position-relative form-group">
-                                <label for="foto_guru" class="">Foto</label> <label class="text-danger">*</label>
+                                <label for="foto_guru" class="">Foto</label>
                                 <input type="file" name="foto_guru" class="form-control" id="foto_guru">
                             </div>
                         </div>
@@ -227,23 +248,26 @@
                 success: function(response){
                     $(".loader").hide();
                     
-                    // if(response.result == false)
-                    // {
-                    //     message(response.message.head, response.message.body, "error", "info");
-                    // }
+                    if(response.result == false)
+                    {
+                        var form_error = response.form_error;
+                        if(form_error.length != 0){
+                            for(i = 0; i < form_error.length; i++){
+                                toastr.error(form_error[i], response.message.head);
+                            }
+                        }else{
+                            message(response.message.head, response.message.body, "error", "info");
+                        }
+                    }
 
-                    // if(response.result == true)
-                    // {
-                    //     message(response.message.head, response.message.body, "success", "info", 1000);
-                    //     setInterval(function(){ 
-                    //         window.location.replace(base_url + response.redirect);
-                    //     }, 1000);
-                    // }
-                    console.log(response);
-                    var form_error = response.form_error;
-                    for(i = 0; i < form_error.length; i++){
-                        console.log(form_error[i]);
-                        toastr.error(form_error[i], response.message.head);
+                    if(response.result == true){
+                        Swal.fire(
+                            response.message.head,
+                            response.message.body,
+                            'success'
+                        );
+
+                        window.location.href = response.redirect;
                     }
                 },
                 error: function(){
