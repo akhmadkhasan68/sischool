@@ -101,7 +101,13 @@
                                                     <td>{{ $row->nama_kelas }}</td>
                                                     <td>{{ $row->tingkat_kelas }}</td>
                                                     <td>{{ $row->jurusan_kelas }}</td>
-                                                    <td>{{ $row->wali_kelas }}</td>
+                                                    <td>
+                                                        @if($row->wali_kelas != 0 || $row->wali_kelas != "")
+                                                            {{ $row->nama_guru }}
+                                                        @else   
+                                                            <div class="badge badge-info">Belum diatur wali kelas</div>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         <button class="btn btn-sm btn-success" onclick="editKelas('{{ $row->id }}')"><i class="fa fa-edit"></i> Ubah</button>
                                                         <button class="btn btn-sm btn-danger" onclick="deleteKelas('{{ $row->id }}')"><i class="fa fa-trash"></i> Hapus</button>
@@ -180,20 +186,18 @@
                         </div>
                     </div>
                     <div class="position-relative form-check">
-                        <input name="check" id="pilih-walikelas" type="checkbox" class="form-check-input">
+                        <input name="check" type="checkbox" class="form-check-input pilih-walikelas">
                         <label for="pilih-walikelas" class="form-check-label">Pilih wali kelas untuk kelas ini</label>
                     </div>
-                    <div class="form-row mt-3">
+                    <div class="form-row mt-3 select-walikelas" style="display:none;">
                         <div class="col-md-12">
                             <div class="position-relative form-group">
                                 <label for="wali_kelas" class="">Pilih Wali Kelas</label>
                                 <select name="wali_kelas" id="wali_kelas" class="form-control">
-                                    <option value="0">Wali Kelas</option>
-                                    <option value="Rulita Octania, S.Pd.">Rulita Octania, S.Pd.</option>
-                                    <option value="Retnowati Dijah Hasfiani, S.Pd.">Retnowati Dijah Hasfiani, S.Pd.</option>
-                                    <option value="Rina Kartika, SS.,M.Pd">Rina Kartika, SS.,M.Pd</option>
-                                    <option value="Wahyu Windari, M.Pd.">Wahyu Windari, M.Pd.</option>
-                                    <option value="Kartini, M.Pd.">Kartini, M.Pd.</option>
+                                    <option value="">Wali Kelas</option>
+                                    @foreach($guru as $rg)
+                                        <option value="{{ $rg->id }}">{{ $rg->nama_guru }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -262,20 +266,18 @@
                         </div>
                     </div>
                     <div class="position-relative form-check">
-                        <input name="check" id="pilih-walikelas" type="checkbox" class="form-check-input">
+                        <input name="check" id="" type="checkbox" class="form-check-input pilih-walikelas">
                         <label for="pilih-walikelas" class="form-check-label">Pilih wali kelas untuk kelas ini</label>
                     </div>
-                    <div class="form-row mt-3">
+                    <div class="form-row mt-3 select-walikelas" style="display:none;">
                         <div class="col-md-12">
                             <div class="position-relative form-group">
-                                <label for="wali_kelas_edit" class="">Pilih Wali Kelas</label>
+                                <label for="wali_kelas" class="">Pilih Wali Kelas</label>
                                 <select name="wali_kelas" id="wali_kelas_edit" class="form-control">
-                                    <option value="0">Wali Kelas</option>
-                                    <option value="Rulita Octania, S.Pd.">Rulita Octania, S.Pd.</option>
-                                    <option value="Retnowati Dijah Hasfiani, S.Pd.">Retnowati Dijah Hasfiani, S.Pd.</option>
-                                    <option value="Rina Kartika, SS.,M.Pd">Rina Kartika, SS.,M.Pd</option>
-                                    <option value="Wahyu Windari, M.Pd.">Wahyu Windari, M.Pd.</option>
-                                    <option value="Kartini, M.Pd.">Kartini, M.Pd.</option>
+                                    <option value="">Wali Kelas</option>
+                                    @foreach($guru as $rg)
+                                        <option value="{{ $rg->id }}">{{ $rg->nama_guru }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -293,6 +295,13 @@
 
 @section('js')
 <script>
+    $(".pilih-walikelas").on('change', function(){
+        if($(this).is(':checked')){
+            $(".select-walikelas").css('display', 'block');
+        }else{
+            $(".select-walikelas").css('display', 'none');
+        }
+    });
     $("#tambah-kelas").submit(function(e){
         e.preventDefault();
         var data = $(this).serialize();
@@ -406,7 +415,7 @@
                             Swal.fire(
                                 response.message.head,
                                 response.message.body,
-                                'error'
+                                'error  '
                             );
 
                             //window.location.href = response.redirect;
@@ -440,6 +449,7 @@
                 $("#jurusan_kelas_edit").val(response.data.jurusan_kelas);
                 $("#wali_kelas_edit").val(response.data.wali_kelas);
                 $("#id_kelas_edit").val(response.data.id);
+                $("#wali_kelas_edit").val(response.data.wali_kelas);
             },
             error: function(){
                 alert('Error Data!');

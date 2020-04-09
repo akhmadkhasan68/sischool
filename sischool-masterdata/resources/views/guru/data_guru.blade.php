@@ -39,7 +39,7 @@
                             <div class="widget-subheading">Guru yang terdaftar</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-white"><span>12</span></div>
+                            <div class="widget-numbers text-white"><span>{{ $count }}</span></div>
                         </div>
                     </div>
                 </div>
@@ -242,6 +242,124 @@
         </div>
     </div>
 </div>
+
+<button class="btn btn-primary btn-block" data-toggle="modal" data-target=".edit-guru" id="edit-button" style="display:none;"><i class="fa fa-edit"></i> Edit Data Guru</button>
+
+<div class="modal fade edit-guru" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Guru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="edit-guru">
+                @csrf()
+                @method('patch')
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="nama_guru_edit" class="">Nama</label> <label class="text-danger">*</label>
+                                <input name="nama_guru" id="nama_guru_edit" placeholder="Nama" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="nip_guru_edit" class="">NIP</label> <label class="text-danger">*</label>
+                                <input name="nip_guru" id="nip_guru_edit" placeholder="NIP Guru" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="position-relative form-group">
+                                <label for="jk_guru" class="">Jenis Kelamin</label> <label class="text-danger">*</label><br>
+                                <input type="radio" name="jk_guru" id="jk_guru_edit_1" value="L"> Laki - laki &nbsp; <input type="radio" name="jk_guru" id="jk_guru_edit_2" value="P"> Perempuan
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="username_edit" class="">Username</label> <label class="text-danger">*</label>
+                                <input name="username" id="username_edit" placeholder="Username" type="text" class="form-control readonly" disabled>
+                                <input type="checkbox" name="change_username" id="change-username" class="mt-2"> Ubah Username
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="password" class="">Password</label> <label class="text-danger">*</label>
+                                <input name="password" id="password_edit" placeholder="Password" type="password" class="form-control readonly" disabled>
+                                <input type="checkbox" name="change_pass" id="change-pass" class="mt-2"> Ubah Password
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="email_edit" class="">Email</label> <label class="text-danger">*</label>
+                                <input name="email" id="email_edit" placeholder="Email" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="no_guru_edit" class="">Nomor Telepon</label> <label class="text-danger">*</label>
+                                <input name="no_guru" id="no_guru_edit" placeholder="Nomor Telepon" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="position-relative form-group">
+                                <label for="alamat_guru_edit" class="">Alamat</label> <label class="text-danger">*</label>
+                                <textarea name="alamat_guru" id="alamat_guru_edit" cols="30" rows="5" class="form-control" placeholder="Alamat Guru"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="position-relative form-group"> 
+                                <label for="kota_guru_edit" class="">Kota/Kabupaten</label> <label class="text-danger">*</label>
+                                <select name="kota_guru" id="kota_guru_edit" class="form-control">
+                                    <option value="">Kota/Kabupaten</option>
+                                    <option value="Malang">Malang</option>
+                                    <option value="Kabupaten Malang">Kabupaten Malang</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="kecamatan_guru_edit" class="">Kecamatan</label> <label class="text-danger">*</label>
+                                <select name="kecamatan_guru" id="kecamatan_guru_edit" class="form-control">
+                                    <option value="">Kecamatan</option>
+                                    <option value="Pakis">Pakis</option>
+                                    <option value="Blimbing">Blimbing</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="checkbox" name="change_photo" id="change-photo" class="mt-2"> Ubah Foto Guru
+                    <div class="form-row" id="change-photo-display" style="display:none;">
+                        <div class="col-md-12">
+                            <div class="position-relative form-group">
+                                <label for="foto_guru_id" class="">Foto</label>
+                                <input type="file" name="foto_guru" class="form-control" id="foto_guru_id">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="id" id="id_guru">
+                <input type="hidden" name="id_user" id="id_user">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -324,6 +442,24 @@
                 success: function(response){
                     $(".loader").hide();
                     console.log(response);
+                    $("#edit-button").click();
+                    $("#nama_guru_edit").val(response.data.nama_guru);
+                    $("#nip_guru_edit").val(response.data.nip_guru);
+                    
+                    if(response.data.jk_guru == 'L'){
+                        $("#jk_guru_edit_1").prop('checked', true);
+                    }else{
+                        $("#jk_guru_edit_2").prop('checked', true);
+                    }
+
+                    $("#username_edit").val(response.data.username);
+                    $("#email_edit").val(response.data.email);
+                    $("#no_guru_edit").val(response.data.no_guru);
+                    $("#alamat_guru_edit").val(response.data.alamat_guru);
+                    $("#kota_guru_edit").val(response.data.kota_guru);
+                    $("#kecamatan_guru_edit").val(response.data.kecamatan_guru);
+                    $("#id_guru").val(response.data.id);
+                    $("#id_user").val(response.data.id_user);
                 },
                 error: function(){
                     alert('Error Data!');
@@ -383,6 +519,34 @@
             })
         }
 
+        $("#change-pass").on('change', function(){
+            if ($(this).is(':checked')) {
+                $("#password_edit").prop( "disabled", false);
+                $("#password_edit").removeClass('readonly');
+            }else{
+                $("#password_edit").prop( "disabled", true);
+                $("#password_edit").addClass('readonly');
+            }
+        });
+
+        $("#change-username").on('change', function(){
+            if ($(this).is(':checked')) {
+                $("#username_edit").prop( "disabled", false);
+                $("#username_edit").removeClass('readonly');
+            }else{
+                $("#username_edit").prop( "disabled", true);
+                $("#username_edit").addClass('readonly');
+            }
+        });
+
+        $("#change-photo").on('change', function(){
+            if ($(this).is(':checked')) {
+                $("#change-photo-display").show();
+            }else{
+                $("#change-photo-display").hide();
+            }
+        });
+
         $("#password-nip").on('change', function(){
             if ($(this).is(':checked')) {
                 var nip = $("#nip_guru").val();
@@ -393,6 +557,51 @@
         });
 
         $("#tambah-guru").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '{{ url("guru") }}',
+                method:"post",
+                dataType: 'json',
+                data:new FormData(this),
+                processData:false,
+                contentType:false,
+                cache:false,
+                async:false,
+                beforeSend: function(){
+                    $(".loader").show();
+                },
+                success: function(response){
+                    $(".loader").hide();
+                    
+                    if(response.result == false)
+                    {
+                        var form_error = response.form_error;
+                        if(form_error.length != 0){
+                            for(i = 0; i < form_error.length; i++){
+                                toastr.error(form_error[i], response.message.head);
+                            }
+                        }else{
+                            message(response.message.head, response.message.body, "error", "info");
+                        }
+                    }
+
+                    if(response.result == true){
+                        Swal.fire(
+                            response.message.head,
+                            response.message.body,
+                            'success'
+                        );
+
+                        window.location.href = response.redirect;
+                    }
+                },
+                error: function(){
+                    alert("Error Data!");
+                }
+            });
+        });
+
+        $("#edit-guru").submit(function(e){
             e.preventDefault();
             $.ajax({
                 url: '{{ url("guru") }}',
