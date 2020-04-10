@@ -45,3 +45,6 @@ Route::post('/guru', 'GuruController@ajax_action_add_guru');
 Route::get('/guru/ajax_get_guru_by_id', 'GuruController@ajax_get_guru_by_id');
 Route::delete('/guru', 'GuruController@ajax_action_delete_guru');
 Route::patch('/guru', 'GuruController@ajax_action_edit_guru');
+
+//ROUTE FOR PENGATURAN SEKOLAH
+Route::get('/pengaturan_sekolah', 'SekolahSettingController@index');

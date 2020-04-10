@@ -15,7 +15,7 @@ class KelasController extends Controller
 
     public function index()
     {
-        $data['nav_active'] = 'kelas';
+        $data['nav_active'] = 'kelas';  
         $data['kelas'] = Kelas::all();
         $data['guru'] = Guru::all();
 

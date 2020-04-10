@@ -215,26 +215,26 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="" @if($nav_active == '' || $nav_active == '') aria-expanded="true" @endif>
+                                <a href="" @if($nav_active == 'pengaturan_sekolah' || $nav_active == '') aria-expanded="true" @endif>
                                     <i class="metismenu-icon pe-7s-settings"></i>
                                     Pengaturan
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
-                                <ul class="@if($nav_active == '' || $nav_active == '') mm-show mm-collapse @endif">
+                                <ul class="@if($nav_active == 'pengaturan_sekolah' || $nav_active == '') mm-show mm-collapse @endif">
                                     <li>
-                                        <a href="{{ url('ortu') }}" class="@if($nav_active == '') mm-active @endif">
+                                        <a href="{{ url('pengaturan_akun') }}" class="@if($nav_active == '') mm-active @endif">
                                             <i class="metismenu-icon"></i>
                                             Pengaturan Akun
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('ortu') }}" class="@if($nav_active == '') mm-active @endif">
+                                        <a href="{{ url('pengaturan_sekolah') }}" class="@if($nav_active == 'pengaturan_sekolah') mm-active @endif">
                                             <i class="metismenu-icon"></i>
                                             Pengaturan Sekolah
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('siswa') }}" class="@if($nav_active == '') mm-active @endif">
+                                        <a href="{{ url('pengaturan_akses') }}" class="@if($nav_active == '') mm-active @endif">
                                             <i class="metismenu-icon"></i>
                                             Pengaturan Hak Akses
                                         </a>
