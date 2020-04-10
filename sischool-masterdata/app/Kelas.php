@@ -11,4 +11,9 @@ class Kelas extends Model
     protected $dates = ['deleted_at'];
     protected $table = 'table_kelas';
     protected $fillable = ['kode_kelas', 'nama_kelas', 'tingkat_kelas', 'jurusan_kelas', 'wali_kelas'];
+
+    public function guru()
+    {
+        return $this->belongsTo('App\Guru', 'wali_kelas');
+    }
 }

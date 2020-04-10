@@ -90,7 +90,7 @@
                                                 <td>
                                                     <button class="btn btn-primary btn-sm" onclick="detail({{ $row->id }})"><i class="fa fa-info"></i> Detail</button>
                                                     <button class="btn btn-success btn-sm" onclick="edit({{ $row->id }})"><i class="fa fa-edit"></i> Ubah</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $row->id_user }})"><i class="fa fa-trash"></i> Hapus</button>
+                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $row->user_id }})"><i class="fa fa-trash"></i> Hapus</button>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -181,28 +181,18 @@
                         <div class="col-md-12">
                             <div class="position-relative form-group">
                                 <label for="alamat_guru" class="">Alamat</label> <label class="text-danger">*</label>
-                                <textarea name="alamat_guru" id="alamat_guru" cols="30" rows="5" class="form-control" placeholder="Alamat Guru"></textarea>
+                                <textarea name="alamat_guru" id="alamat_guru" cols="30" rows="5" class="form-control" placeholder="Masukkan alamat lengkap guru"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="position-relative form-group"> 
                                 <label for="kota_guru" class="">Kota/Kabupaten</label> <label class="text-danger">*</label>
                                 <select name="kota_guru" id="kota_guru" class="form-control">
                                     <option value="">Kota/Kabupaten</option>
                                     <option value="Malang">Malang</option>
                                     <option value="Kabupaten Malang">Kabupaten Malang</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="position-relative form-group">
-                                <label for="kecamatan_guru" class="">Kecamatan</label> <label class="text-danger">*</label>
-                                <select name="kecamatan_guru" id="kecamatan_guru" class="form-control">
-                                    <option value="">Kecamatan</option>
-                                    <option value="Pakis">Pakis</option>
-                                    <option value="Blimbing">Blimbing</option>
                                 </select>
                             </div>
                         </div>
@@ -319,23 +309,13 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="position-relative form-group"> 
                                 <label for="kota_guru_edit" class="">Kota/Kabupaten</label> <label class="text-danger">*</label>
                                 <select name="kota_guru" id="kota_guru_edit" class="form-control">
                                     <option value="">Kota/Kabupaten</option>
                                     <option value="Malang">Malang</option>
                                     <option value="Kabupaten Malang">Kabupaten Malang</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="position-relative form-group">
-                                <label for="kecamatan_guru_edit" class="">Kecamatan</label> <label class="text-danger">*</label>
-                                <select name="kecamatan_guru" id="kecamatan_guru_edit" class="form-control">
-                                    <option value="">Kecamatan</option>
-                                    <option value="Pakis">Pakis</option>
-                                    <option value="Blimbing">Blimbing</option>
                                 </select>
                             </div>
                         </div>
@@ -351,7 +331,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="id" id="id_guru">
-                <input type="hidden" name="id_user" id="id_user">
+                <input type="hidden" name="user_id" id="user_id">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -376,7 +356,7 @@
                 },
                 success: function(response){
                     $(".loader").hide();
-
+                    console.log(response);
                     if(response.data.foto_guru != ""){
                         var images =  'uploads/photos/' + response.data.foto_guru;
                     }else{
@@ -400,13 +380,11 @@
                             <br>
                             <b>Nomor Telepon:</b> `+ response.data.no_guru +`
                             <br>
-                            <b>Email:</b> `+ response.data.email +`
+                            <b>Email:</b> `+ response.data.user.email +`
                             <br>
-                            <b>Username:</b> `+ response.data.username +`
+                            <b>Username:</b> `+ response.data.user.username +`
                             <br>
                             <b>Alamat:</b> `+ response.data.alamat_guru +`
-                            <br>
-                            <b>Kecamatan:</b> `+ response.data.kecamatan_guru +`
                             <br>
                             <b>Kota/Kabupaten:</b> `+ response.data.kota_guru +`
                         </div>
@@ -457,9 +435,8 @@
                     $("#no_guru_edit").val(response.data.no_guru);
                     $("#alamat_guru_edit").val(response.data.alamat_guru);
                     $("#kota_guru_edit").val(response.data.kota_guru);
-                    $("#kecamatan_guru_edit").val(response.data.kecamatan_guru);
                     $("#id_guru").val(response.data.id);
-                    $("#id_user").val(response.data.id_user);
+                    $("#user_id").val(response.data.user_id);
                 },
                 error: function(){
                     alert('Error Data!');
@@ -616,8 +593,7 @@
                     $(".loader").show();
                 },
                 success: function(response){
-                    $(".loader").hide();
-                    
+                    $(".loader").hide(); 
                     if(response.result == false)
                     {
                         var form_error = response.form_error;

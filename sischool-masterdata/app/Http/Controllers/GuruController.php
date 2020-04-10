@@ -78,7 +78,6 @@ class GuruController extends Controller
             ],
             'alamat_guru' => 'required',
             'kota_guru' => 'required',
-            'kecamatan_guru' => 'required',
             'foto_guru' => 'mimes:jpeg,bmp,png|max:2000|image',
         ]);
         $validator->setAttributeNames($attrs); 
@@ -134,10 +133,9 @@ class GuruController extends Controller
             'jk_guru' => $request->jk_guru,
             'no_guru' => $request->no_guru,
             'alamat_guru' => $request->alamat_guru,
-            'kecamatan_guru' => $request->kecamatan_guru,
             'kota_guru' => $request->kota_guru,
             'foto_guru' => $imageName,
-            'id_user' => $users->id
+            'user_id' => $users->id
         ]);
 
         if(!$guru || !$users)
@@ -184,12 +182,12 @@ class GuruController extends Controller
             ],
             'jk_guru' => 'required',
             'username' => [
-                Rule::unique('users')->ignore($request->id_user)
+                Rule::unique('users')->ignore($request->user_id)
             ],
             'password' => 'max:255|min:5',
             'email' => [
                 'required',
-                Rule::unique('users')->ignore($request->id_user)
+                Rule::unique('users')->ignore($request->user_id)
             ],
             'no_guru' => [
                 'required',
@@ -199,7 +197,6 @@ class GuruController extends Controller
             ],
             'alamat_guru' => 'required',
             'kota_guru' => 'required',
-            'kecamatan_guru' => 'required',
             'foto_guru' => 'mimes:jpeg,bmp,png|max:2000|image',
         ]);
         $validator->setAttributeNames($attrs); 
@@ -248,7 +245,6 @@ class GuruController extends Controller
         $guru->jk_guru = $request->jk_guru;
         $guru->no_guru = $request->no_guru;
         $guru->alamat_guru = $request->alamat_guru;
-        $guru->kecamatan_guru = $request->kecamatan_guru;
         $guru->kota_guru = $request->kota_guru;
         if($request->change_photo != NULL || $request->change_photo != ""){
             $guru->foto_guru = $imageName;
@@ -256,7 +252,7 @@ class GuruController extends Controller
         $guru->save();
 
         //UPDATE USER
-        $users = User::find($request->id_user);
+        $users = User::find($request->user_id);
         $users->name = $request->nama_guru;
         if($request->change_username != NULL || $request->change_username != ""){
             $users->username = $request->username;
@@ -291,20 +287,19 @@ class GuruController extends Controller
 
     public function ajax_get_guru_by_id(Request $request)
     {
-        $row = Guru::where('table_guru.id', $request->id)
-                        ->Join('users', 'users.id', '=', 'table_guru.id_user')
-                        ->select('table_guru.id', 'table_guru.nama_guru', 'table_guru.nip_guru', 'table_guru.jk_guru', 'table_guru.no_guru', 'table_guru.alamat_guru', 'table_guru.kecamatan_guru', 'table_guru.kota_guru', 'table_guru.foto_guru', 'table_guru.id_user', 'users.username', 'users.email')
-                        ->first();
+        $row = Guru::find($request->id);
+
         $json_data = [
             'result' => true,
-            'data' => $row
+            'data' => $row,
+            'data2' => $row->user
         ];
         return json_encode($json_data);
     }
 
     public function ajax_action_delete_guru(Request $request)
     {
-        $delete_guru = Guru::where('id_user', $request->id)->delete();
+        $delete_guru = Guru::where('user_id', $request->id)->delete();
         $delete_user = User::destroy($request->id);
 
         if(!$delete_guru || !$delete_user)

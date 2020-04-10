@@ -103,7 +103,7 @@
                                                     <td>{{ $row->jurusan_kelas }}</td>
                                                     <td>
                                                         @if($row->wali_kelas != 0 || $row->wali_kelas != "")
-                                                            {{ $row->nama_guru }}
+                                                            {{ $row->guru->nama_guru }}
                                                         @else   
                                                             <div class="badge badge-info">Belum diatur wali kelas</div>
                                                         @endif

@@ -16,9 +16,7 @@ class KelasController extends Controller
     public function index()
     {
         $data['nav_active'] = 'kelas';
-        $data['kelas'] = Kelas::leftJoin('table_guru', 'table_guru.id', '=', 'table_kelas.wali_kelas')
-                        ->select('table_kelas.id', 'table_kelas.kode_kelas', 'table_kelas.nama_kelas', 'table_kelas.tingkat_kelas', 'table_kelas.jurusan_kelas', 'table_kelas.wali_kelas', 'table_guru.nama_guru')
-                        ->get();
+        $data['kelas'] = Kelas::all();
         $data['guru'] = Guru::all();
 
         return view('kelas.data_kelas', $data);

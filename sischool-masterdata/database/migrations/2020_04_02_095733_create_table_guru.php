@@ -20,7 +20,6 @@ class CreateTableGuru extends Migration
             $table->enum('jk_guru', ['L', 'P']);	
             $table->string('no_guru', 15);	
             $table->text('alamat_guru');	
-            $table->string('kecamatan_guru');
             $table->string('kota_guru');
             $table->string('foto_guru');
             $table->timestamps();
