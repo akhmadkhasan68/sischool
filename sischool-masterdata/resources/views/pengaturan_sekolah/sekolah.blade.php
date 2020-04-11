@@ -60,9 +60,9 @@
                                             <div class="position-relative form-group">
                                                 <label for="jenjang_sekolah" class="">Jenjang Sekolah</label>
                                                 <select name="jenjang_sekolah" id="jenjang_sekolah" class="form-control">
-                                                    <option value="SD" @if($sekolah->jenjang_sekolah == 'SD') selected @endif>SD</option>
-                                                    <option value="SMP" @if($sekolah->jenjang_sekolah == 'SMP') selected @endif>SMP</option>
-                                                    <option value="SMA" @if($sekolah->jenjang_sekolah == 'SMA') selected @endif>SMA</option>
+                                                    <option value="SD" @if($sekolah->jenjang_sekolah == 'SD') selected @endif>SD/MI</option>
+                                                    <option value="SMP" @if($sekolah->jenjang_sekolah == 'SMP') selected @endif>SMP/MTs</option>
+                                                    <option value="SMA" @if($sekolah->jenjang_sekolah == 'SMA') selected @endif>SMA/SMK</option>
                                                 </select>
                                             </div>
                                         </div>

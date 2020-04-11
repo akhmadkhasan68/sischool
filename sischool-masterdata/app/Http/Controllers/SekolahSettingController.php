@@ -45,7 +45,6 @@ class SekolahSettingController extends Controller
             'tipe_sekolah' => 'Tipe sekolah',
             'telepon_sekolah' => 'Nomor Telepon sekolah',
             'email_sekolah' => 'Email sekolah',
-            'fax_sekolah' => 'Fax sekolah',
             'alamat_sekolah' => 'Alamat sekolah',
             'kota_sekolah' => 'Kota sekolah'
         ];
@@ -57,7 +56,6 @@ class SekolahSettingController extends Controller
             'tipe_sekolah' => 'required',
             'telepon_sekolah' => 'required|min:9|numeric',
             'email_sekolah' => 'email|required',
-            'fax_sekolah' => 'numeric',
             'alamat_sekolah' => 'min:10|required',
             'kota_sekolah' => 'required'
         ];

@@ -21,9 +21,9 @@ class CreateTableConfSekolah extends Migration
             $table->text('alamat_sekolah');
             $table->string('kota_sekolah', 100);
             $table->string('telepon_sekolah', 15);
-            $table->string('email_sekolah', 50);
-            $table->string('fax_sekolah', 50);
-            $table->string('web_sekolah', 50);
+            $table->string('email_sekolah', 50)->nullable();
+            $table->string('fax_sekolah', 50)->nullable();
+            $table->string('web_sekolah', 50)->nullable();
             $table->enum('tipe_sekolah', ['NEGERI', 'SWASTA']);
             $table->string('logo_sekolah', 100);
             $table->enum('status_ppdb', ['1', '0']);
