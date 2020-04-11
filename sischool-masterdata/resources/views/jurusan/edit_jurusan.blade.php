@@ -10,7 +10,7 @@
                         <i class="pe-7s-id icon-gradient bg-mean-fruit">
                         </i>
                     </div>
-                    <div>Tambah Data
+                    <div>Edit Data {{ $row->nama_jurusan }}
                         <div class="page-title-subheading">
                             <?=date("l, d F Y") ?>
                         </div>
@@ -28,26 +28,28 @@
         <div class="row mt-3">
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Tambah Data</h5>
+                    <div class="card-body"><h5 class="card-title">Edit Data</h5>
                         <form id="myform" method="post">
                             @csrf
+                            @method('patch')
+                            <input type="hidden" name="id" value="{{ $row->id }}">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
                                         <label for="exampleEmail11" class="">Kode Jurusan</label>
-                                        <input name="kode_jurusan" placeholder="Masukkan kode jurusan" type="text" class="form-control">
+                                        <input name="kode_jurusan" placeholder="Masukkan kode jurusan" type="text" class="form-control" value="{{ $row->kode_jurusan }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
                                         <label for="examplePassword11" class="">Nama Jurusan</label>
-                                        <input name="nama_jurusan" placeholder="Masukkan nama jurusan" type="text" class="form-control">
+                                        <input name="nama_jurusan" placeholder="Masukkan nama jurusan" type="text" class="form-control" value="{{ $row->nama_jurusan }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button type="submit" class="btn btn-primary btn-block">Simpan Data</button>
+                                    <button type="submit" class="btn btn-primary btn-block">Ubah Data</button>
                                 </div>
                             </div>
                         </form>
@@ -65,7 +67,7 @@
         e.preventDefault();
         var data = $(this).serialize();
         $.ajax({
-            url: '{{ url("jurusan/tambah") }}',
+            url: '{{ url("jurusan/edit") }}',
             method: 'POST',
             data: data,
             dataType: 'json',

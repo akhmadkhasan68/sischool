@@ -39,7 +39,7 @@
                             <div class="widget-subheading">Jurusan yang terdaftar</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-white"><span>12</span></div>
+                            <div class="widget-numbers text-white"><span>{{count($jurusan)}}</span></div>
                         </div>
                     </div>
                 </div>
@@ -51,16 +51,6 @@
                 <a href="/jurusan/tambah" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Tambah Data</a>
             </div>
         </div>
-        
-        @if(session()->has('message'))
-            <div class="row mt-3">
-                <div class="col-md-12 col-12">
-                    <div class="alert alert-success">
-                        <b>Selamat!</b> {{ session()->get('message') }}
-                    </div>
-                </div>
-            </div>
-        @endif
 
         <div class="row mt-3">
             <div class="col-md-12">
@@ -85,7 +75,7 @@
                                         <td>{{ $row->kode_jurusan }}</td>
                                         <td>{{ $row->nama_jurusan }}</td>
                                         <td>
-                                            <a href="{{ url('kelas/edit/$row->id') }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Ubah</a>
+                                            <a href="{{ url('kelas/edit/') }}/{{ $row->id }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Ubah</a>
                                             <button class="btn btn-sm btn-danger" onclick="deleteKelas('{{ $row->id }}')"><i class="fa fa-trash"></i> Hapus</button>
                                         </td>
                                     </tr>
@@ -100,4 +90,63 @@
     </div>
 </div>
 <!-- END CONTENT -->
+<form id="form-delete">
+    @csrf
+    @method('delete')
+    <input type="hidden" name="id" id="id-jurusan">
+</form>
+@endsection
+
+@section('js')
+<script>
+    function deleteKelas(id)
+    {
+        Swal.fire({
+            title: 'Apakah anda ingin menghapus ?',
+            text: "Anda akan yakin akan menghapus data jurusan ini",
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#f5365c',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.value) {
+                // form-delete
+                $("#id-jurusan").val(id);
+                var data = $("#form-delete").serialize();
+                $.ajax({
+                    url: '{{ url("jurusan") }}',
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    beforeSend: function(){
+                        $(".loader").show();
+                    },
+                    success: function(response){
+                        $(".loader").hide();
+                        if(response.result == true){
+                            Swal.fire(
+                                response.message.head,
+                                response.message.body,
+                                'success'
+                            );
+
+                            window.location.href = response.redirect;
+                        }else{
+                            Swal.fire(
+                                response.message.head,
+                                response.message.body,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(){
+                        alert('Error Data!');
+                    }
+                });
+            }
+        })
+    }
+</script>
 @endsection

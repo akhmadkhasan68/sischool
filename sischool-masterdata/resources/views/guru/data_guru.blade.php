@@ -39,7 +39,7 @@
                             <div class="widget-subheading">Guru yang terdaftar</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-white"><span>{{ $count }}</span></div>
+                            <div class="widget-numbers text-white"><span>{{ count($result) }}</span></div>
                         </div>
                     </div>
                 </div>

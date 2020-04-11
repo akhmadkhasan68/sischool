@@ -18,6 +18,7 @@ class SekolahSettingController extends Controller
     public function index()
     {
         $data['nav_active'] = 'pengaturan_sekolah';
+        $data['title'] = 'Pengaturan Sekolah';
         $data['sekolah'] = Sekolah::first();
 
         return view('pengaturan_sekolah.sekolah', $data);

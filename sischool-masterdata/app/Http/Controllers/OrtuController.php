@@ -14,6 +14,7 @@ class OrtuController extends Controller
     public function index()
     {
         $data['nav_active'] = 'ortu';
+        $data['title'] = 'Data Orang Tua';
         return view('siswa.data_ortu', $data);
     }
 }

@@ -14,6 +14,7 @@ class SiswaController extends Controller
     public function index()
     {
         $data['nav_active'] = 'siswa';
+        $data['title'] = 'Data Siswa';
         return view('siswa.data_siswa', $data);
     }
 }

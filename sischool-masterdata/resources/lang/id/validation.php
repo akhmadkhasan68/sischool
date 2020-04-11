@@ -118,7 +118,7 @@ return [
     'uploaded' => 'Kolom :attribute gagal diunggah.',
     'url' => 'Kolom :attribute format tidak valid.',
     'uuid' => 'Kolom :attribute harus berupa UUID yang valid.',
-
+    'without_spaces' => 'Kolom :attribute tidak boleh mengandung spasi.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

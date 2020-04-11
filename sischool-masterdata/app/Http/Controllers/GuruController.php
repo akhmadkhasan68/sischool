@@ -22,8 +22,8 @@ class GuruController extends Controller
     public function index()
     {
         $data['nav_active'] = 'guru';
+        $data['title'] = 'Data Guru';
         $data['result'] = Guru::all();
-        $data['count'] = count(Guru::all());
 
         return view('guru.data_guru', $data);
     }
@@ -63,7 +63,8 @@ class GuruController extends Controller
             'jk_guru' => 'required',
             'username' => [
                 'required',
-                Rule::unique('users')
+                Rule::unique('users'),
+                'without_spaces'
             ],
             'password' => 'required|max:255|min:5',
             'email' => [

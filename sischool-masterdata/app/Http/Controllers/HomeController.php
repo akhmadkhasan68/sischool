@@ -24,6 +24,8 @@ class HomeController extends Controller
     public function index()
     {   
         $data['nav_active'] = 'home';
+        $data['title'] = 'Home';
+
         return view('home', $data);
     }
 }

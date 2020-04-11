@@ -30,8 +30,11 @@ Route::get('/kelas/ajax_get_kelas_by_id', 'KelasController@ajax_get_kelas_by_id'
 
 //ROUTE FOR JURUSAN
 Route::get('/jurusan', 'JurusanController@index');
+Route::delete('/jurusan', 'JurusanController@ajax_action_delete_jurusan');
 Route::get('/jurusan/tambah', 'JurusanController@add_jurusan');
 Route::post('/jurusan/tambah', 'JurusanController@ajax_action_add_jurusan');
+Route::patch('/jurusan/edit', 'JurusanController@ajax_action_edit_jurusan');
+Route::get('kelas/edit/{id}', 'JurusanController@edit_jurusan');
 
 //ROUTE FOR SISWA
 Route::get('/siswa', 'SiswaController@index')->name('siswa');
