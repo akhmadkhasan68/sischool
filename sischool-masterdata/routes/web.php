@@ -48,3 +48,5 @@ Route::patch('/guru', 'GuruController@ajax_action_edit_guru');
 
 //ROUTE FOR PENGATURAN SEKOLAH
 Route::get('/pengaturan_sekolah', 'SekolahSettingController@index');
+Route::patch('/pengaturan_sekolah', 'SekolahSettingController@ajax_action_update_sekolah');
+Route::patch('/pengaturan_sekolah/update_ppdb', 'SekolahSettingController@ajax_action_update_ppdb');

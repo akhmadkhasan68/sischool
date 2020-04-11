@@ -35,7 +35,9 @@
                     <div class="card-body">
                         <h5 class="card-title">Informasi Sekolah</h5>  
 
-                        <form id="form-1">
+                        <form id="form-1" method="post">
+                            @csrf
+                            @method('patch')
                             <input type="hidden" name="id" id="id" value="{{ $sekolah->id }}">
                             <div class="row">
                                 <div class="col-md-12 mt-3">
@@ -137,7 +139,7 @@
                                                     </div>
                                                     <div id="logo-images">
                                                         <br>
-                                                        <img src="uploads/logo/cabdindik.png" alt="" class="rounded img-fluid" width="150px">
+                                                        <img src="uploads/logo/{{$sekolah->logo_sekolah}}" alt="" class="rounded img-fluid" width="150px">
                                                     </div>
                                                     <input type="checkbox" name="change_logo" id="change_logo" class="mt-3"> Ganti logo?
                                                 </div>
@@ -159,7 +161,9 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <h5 class="card-title">Status PPDB</h5>  
-                        <form id="form-1">
+                        <form id="form-2" method="post">
+                            @csrf
+                            @method('patch')
                             <input type="hidden" name="id" id="id" value="{{ $sekolah->id }}">
                             <div class="row">
                                 <div class="col-md-12">
@@ -202,6 +206,94 @@
             $("#logo-images").css('display', 'block');
             $("#upload-form").css('display', 'none');
         }
+    });
+
+    $("#form-1").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: '{{ url("pengaturan_sekolah") }}',
+            method:"post",
+            dataType: 'json',
+            data:new FormData(this),
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            beforeSend: function(){
+                $(".loader").show();
+            },
+            success: function(response){
+                $(".loader").hide();
+                
+                if(response.result == false)
+                {
+                    var form_error = response.form_error;
+                    if(form_error.length != 0){
+                        for(i = 0; i < form_error.length; i++){
+                            toastr.error(form_error[i], response.message.head);
+                        }
+                    }else{
+                        message(response.message.head, response.message.body, "error", "info");
+                    }
+                }
+
+                if(response.result == true){
+                    Swal.fire(
+                        response.message.head,
+                        response.message.body,
+                        'success'
+                    );
+
+                    window.location.href = response.redirect;
+                }
+            },
+            error: function(){
+                alert("Error Data!");
+            }
+        });
+    });
+
+    $("#form-2").submit(function(e){
+        e.preventDefault();
+        var data = $(this).serialize();
+        
+        $.ajax({
+            url: '{{ url("pengaturan_sekolah/update_ppdb") }}',
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            beforeSend: function(){
+                $(".loader").show();
+            },
+            success: function(response){
+                $(".loader").hide();
+                
+                if(response.result == true){
+                    Swal.fire(
+                        response.message.head,
+                        response.message.body,
+                        'success'
+                    );
+
+                    window.location.href = response.redirect;
+                }else{
+                    Swal.fire(
+                        response.message.head,
+                        response.message.body,
+                        'error'
+                    );
+
+                    window.location.href = response.redirect;
+                }
+            },
+            error: function(){
+                alert('Error data!');
+            }
+        });
+    });
+
+    $("#status_ppdb").on('change', function(){
+        $("#form-2").submit();
     });
 </script>
 @endsection
