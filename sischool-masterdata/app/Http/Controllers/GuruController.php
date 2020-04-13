@@ -216,7 +216,7 @@ class GuruController extends Controller
             die();
         }
 
-        if($request->change_photo != NULL || $request->change_photo != ""){
+        if($request->foto_guru != NULL){
             //PROCESS UPLOAD IMAGE
             $imageName = '';
             if ($request->hasFile('foto_guru')) {
@@ -247,7 +247,7 @@ class GuruController extends Controller
         $guru->no_guru = $request->no_guru;
         $guru->alamat_guru = $request->alamat_guru;
         $guru->kota_guru = $request->kota_guru;
-        if($request->change_photo != NULL || $request->change_photo != ""){
+        if($request->foto_guru != NULL){
             $guru->foto_guru = $imageName;
         }
         $guru->save();

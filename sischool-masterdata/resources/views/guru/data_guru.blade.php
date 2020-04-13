@@ -320,7 +320,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="checkbox" name="change_photo" id="change-photo" class="mt-2"> Ubah Foto Guru
+                    <input type="checkbox" name="change_photo" id="change-photo" class="my-2"> Ubah Foto Guru
                     <div class="form-row" id="change-photo-display" style="display:none;">
                         <div class="col-md-12">
                             <div class="position-relative form-group">
@@ -518,9 +518,9 @@
 
         $("#change-photo").on('change', function(){
             if ($(this).is(':checked')) {
-                $("#change-photo-display").show();
+                $("#change-photo-display").slideDown();
             }else{
-                $("#change-photo-display").hide();
+                $("#change-photo-display").slideUp();
             }
         });
 
@@ -558,7 +558,11 @@
                                 toastr.error(form_error[i], response.message.head);
                             }
                         }else{
-                            message(response.message.head, response.message.body, "error", "info");
+                            Swal.fire(
+                                response.message.head,
+                                response.message.body,
+                                'error'
+                            );
                         }
                     }
 
@@ -602,7 +606,11 @@
                                 toastr.error(form_error[i], response.message.head);
                             }
                         }else{
-                            message(response.message.head, response.message.body, "error", "info");
+                            Swal.fire(
+                                response.message.head,
+                                response.message.body,
+                                'error'
+                            );
                         }
                     }
 

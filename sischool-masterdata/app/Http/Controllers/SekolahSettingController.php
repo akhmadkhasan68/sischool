@@ -59,7 +59,7 @@ class SekolahSettingController extends Controller
             'alamat_sekolah' => 'min:10|required',
             'kota_sekolah' => 'required'
         ];
-        if($request->change_logo == 'on')
+        if($request->logo_sekolah != NULL)
         {
             $logo = ['logo_sekolah' => 'mimes:jpeg,bmp,png|max:2000|image|required'];
             $column = array_merge($column, $logo);
@@ -82,9 +82,10 @@ class SekolahSettingController extends Controller
             die();
         }
 
-        if($request->change_logo == 'on'){
+        if($request->logo_sekolah != NULL){
             $file = $request->file('logo_sekolah');
             $upload_image = $this->upload_image($file);
+
             if($upload_image == false)
             {
                 $json_data = [
@@ -96,8 +97,9 @@ class SekolahSettingController extends Controller
                 return json_encode($json_data);
                 die();
             }
+
             $imageName = time().'.'.$file->getClientOriginalExtension();
-        }
+       }
 
         //UPDATE GURU
         $sekolah = Sekolah::find($request->id);
@@ -111,7 +113,7 @@ class SekolahSettingController extends Controller
         $sekolah->web_sekolah = $request->web_sekolah;
         $sekolah->alamat_sekolah = $request->alamat_sekolah;
         $sekolah->kota_sekolah = $request->kota_sekolah;
-        if($request->change_logo == "on"){
+        if($request->logo_sekolah != NULL){
             $sekolah->logo_sekolah = $imageName;
         }
         $sekolah->save();

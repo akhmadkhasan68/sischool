@@ -215,14 +215,14 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="" @if($nav_active == 'pengaturan_sekolah' || $nav_active == '') aria-expanded="true" @endif>
+                                <a href="" @if($nav_active == 'pengaturan_sekolah' || $nav_active == 'pengaturan_akun') aria-expanded="true" @endif>
                                     <i class="metismenu-icon pe-7s-settings"></i>
                                     Pengaturan
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
-                                <ul class="@if($nav_active == 'pengaturan_sekolah' || $nav_active == '') mm-show mm-collapse @endif">
+                                <ul class="@if($nav_active == 'pengaturan_sekolah' || $nav_active == 'pengaturan_akun') mm-show mm-collapse @endif">
                                     <li>
-                                        <a href="{{ url('pengaturan_akun') }}" class="@if($nav_active == '') mm-active @endif">
+                                        <a href="{{ url('pengaturan_akun') }}" class="@if($nav_active == 'pengaturan_akun') mm-active @endif">
                                             <i class="metismenu-icon"></i>
                                             Pengaturan Akun
                                         </a>

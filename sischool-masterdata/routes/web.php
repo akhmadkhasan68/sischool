@@ -53,3 +53,7 @@ Route::patch('/guru', 'GuruController@ajax_action_edit_guru');
 Route::get('/pengaturan_sekolah', 'SekolahSettingController@index');
 Route::patch('/pengaturan_sekolah', 'SekolahSettingController@ajax_action_update_sekolah');
 Route::patch('/pengaturan_sekolah/update_ppdb', 'SekolahSettingController@ajax_action_update_ppdb');
+
+//ROUTE FOR PENGATURAN AKUN
+Route::get('/pengaturan_akun', 'AccountSettingController@index');
+Route::patch('/pengaturan_akun', 'AccountSettingController@ajax_action_edit_account');

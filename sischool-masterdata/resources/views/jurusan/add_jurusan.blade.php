@@ -34,13 +34,13 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
-                                        <label for="exampleEmail11" class="">Kode Jurusan</label>
+                                        <label for="exampleEmail11" class="">Kode Jurusan</label> <span class="text-danger">*</span>
                                         <input name="kode_jurusan" placeholder="Masukkan kode jurusan" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
-                                        <label for="examplePassword11" class="">Nama Jurusan</label>
+                                        <label for="examplePassword11" class="">Nama Jurusan</label> <span class="text-danger">*</span>
                                         <input name="nama_jurusan" placeholder="Masukkan nama jurusan" type="text" class="form-control">
                                     </div>
                                 </div>
@@ -83,7 +83,11 @@
                             toastr.error(form_error[i], response.message.head);
                         }
                     }else{
-                        message(response.message.head, response.message.body, "error", "info");
+                        Swal.fire(
+                            response.message.head,
+                            response.message.body,
+                            'error'
+                        );
                     }
                 }
 

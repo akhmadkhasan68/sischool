@@ -44,13 +44,13 @@
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <div class="position-relative form-group">
-                                                <label for="nama_sekolah" class="">Nama Sekolah</label>
+                                                <label for="nama_sekolah" class="">Nama Sekolah</label> <span class="text-danger">*</span>
                                                 <input name="nama_sekolah" id="nama_sekolah" placeholder="Masukkan nama sekolah" type="text" class="form-control" value="{{ $sekolah->nama_sekolah }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="position-relative form-group">
-                                                <label for="npsn_sekolah" class="">NPSN Sekolah</label>
+                                                <label for="npsn_sekolah" class="">NPSN Sekolah</label> <span class="text-danger">*</span>
                                                 <input name="npsn_sekolah" id="npsn_sekolah" placeholder="Masukkan nomor NPSN sekolah" type="text" class="form-control" value="{{ $sekolah->npsn_sekolah }}">
                                             </div>
                                         </div>
@@ -58,7 +58,7 @@
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <div class="position-relative form-group">
-                                                <label for="jenjang_sekolah" class="">Jenjang Sekolah</label>
+                                                <label for="jenjang_sekolah" class="">Jenjang Sekolah</label> <span class="text-danger">*</span>
                                                 <select name="jenjang_sekolah" id="jenjang_sekolah" class="form-control">
                                                     <option value="SD" @if($sekolah->jenjang_sekolah == 'SD') selected @endif>SD/MI</option>
                                                     <option value="SMP" @if($sekolah->jenjang_sekolah == 'SMP') selected @endif>SMP/MTs</option>
@@ -68,7 +68,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="position-relative form-group">
-                                                <label for="tipe_sekolah" class="">Tipe Sekolah</label>
+                                                <label for="tipe_sekolah" class="">Tipe Sekolah</label> <span class="text-danger">*</span>
                                                 <select name="tipe_sekolah" id="tipe_sekolah" class="form-control">
                                                     <option value="NEGERI" @if($sekolah->tipe_sekolah == 'NEGERI') selected @endif>NEGERI</option>
                                                     <option value="SWASTA" @if($sekolah->tipe_sekolah == 'SWASTA') selected @endif>SWASTA</option>
@@ -79,13 +79,13 @@
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <div class="position-relative form-group">
-                                                <label for="telepon_sekolah" class="">Nomor Telepon Sekolah</label>
+                                                <label for="telepon_sekolah" class="">Nomor Telepon Sekolah</label> <span class="text-danger">*</span>
                                                 <input name="telepon_sekolah" id="telepon_sekolah" placeholder="Masukkan nomor telepon sekolah" type="text" class="form-control" value="{{ $sekolah->telepon_sekolah }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="position-relative form-group">
-                                                <label for="email_sekolah" class="">E-mail Sekolah</label>
+                                                <label for="email_sekolah" class="">E-mail Sekolah</label> <span class="text-danger">*</span>
                                                 <input name="email_sekolah" id="email_sekolah" placeholder="Masukkan email sekolah" type="text" class="form-control" value="{{ $sekolah->email_sekolah }}">
                                             </div>
                                         </div>
@@ -107,7 +107,7 @@
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="position-relative form-group">
-                                                <label for="alamat_sekolah" class="">Alamat Sekolah</label>
+                                                <label for="alamat_sekolah" class="">Alamat Sekolah</label> <span class="text-danger">*</span>
                                                 <textarea name="alamat_sekolah" id="alamat_sekolah" class="form-control" cols="30" rows="7" placeholder="Masukkan alamat lengkap sekolah">{{ $sekolah->alamat_sekolah }}</textarea>
                                             </div>
                                         </div>
@@ -115,7 +115,7 @@
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="position-relative form-group">
-                                                <label for="kota_sekolah" class="">Kota Sekolah</label>
+                                                <label for="kota_sekolah" class="">Kota Sekolah</label> <span class="text-danger">*</span>
                                                 <input name="kota_sekolah" id="kota_sekolah" placeholder="Masukkan kota sekolah" type="text" class="form-control" value="{{ $sekolah->kota_sekolah }}">
                                             </div>
                                         </div>
@@ -200,11 +200,11 @@
 <script>
     $("#change_logo").on('change', function(){
         if($(this).is(':checked')){
-            $("#logo-images").css('display', 'none');
-            $("#upload-form").css('display', 'block');
+            $("#logo-images").slideUp();
+            $("#upload-form").slideDown();
         }else{
-            $("#logo-images").css('display', 'block');
-            $("#upload-form").css('display', 'none');
+            $("#logo-images").slideDown();
+            $("#upload-form").slideUp();
         }
     });
 
@@ -233,7 +233,11 @@
                             toastr.error(form_error[i], response.message.head);
                         }
                     }else{
-                        message(response.message.head, response.message.body, "error", "info");
+                        Swal.fire(
+                            response.message.head,
+                            response.message.body,
+                            'error'
+                        );
                     }
                 }
 
