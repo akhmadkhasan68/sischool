@@ -39,7 +39,7 @@
                             <div class="widget-subheading">Kelas yang terdaftar</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-white"><span>12</span></div>
+                            <div class="widget-numbers text-white"><span>{{count($kelas)}}</span></div>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
             <div class="col-md-6">
                 <select name="filter_jurusan" id="filter_jurusan" class="form-control">
                     <option value="0">Filter Jurusan</option>
@@ -64,12 +64,12 @@
             <div class="col-md-6">
                 <select name="filter_tingkat" id="filter_tingkat" class="form-control">
                     <option value="0">Filter Tingkatan</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
+                    @foreach($jenjang as $rj)
+                        <option value="{{ $rj->level }}">{{ $rj->level }}</option>
+                    @endforeach
                 </select>
             </div>
-        </div>
+        </div> -->
 
         <div class="row">
             <div class="col-md-12 col-lg-12 col-12">
@@ -80,7 +80,7 @@
                         <div class="row">
                             <div class="col-md-12 col-12">
                                 <div class="table-responsive">
-                                    <table class="table table-">
+                                    <table class="table table-bordered" id="kelas-table">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -92,29 +92,6 @@
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php $no = 1;?>
-                                            @foreach($kelas as $row)
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
-                                                    <td>{{ $row->kode_kelas }}</td>
-                                                    <td>{{ $row->nama_kelas }}</td>
-                                                    <td>{{ $row->tingkat_kelas }}</td>
-                                                    <td>{{ $row->jurusan_kelas }}</td>
-                                                    <td>
-                                                        @if($row->wali_kelas != 0 || $row->wali_kelas != "")
-                                                            {{ $row->guru->nama_guru }}
-                                                        @else   
-                                                            <div class="badge badge-info">Belum diatur wali kelas</div>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-success" onclick="editKelas('{{ $row->id }}')"><i class="fa fa-edit"></i> Ubah</button>
-                                                        <button class="btn btn-sm btn-danger" onclick="deleteKelas('{{ $row->id }}')"><i class="fa fa-trash"></i> Hapus</button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -166,10 +143,10 @@
                             <div class="position-relative form-group">
                                 <label for="tingkat_kelas" class="">Tingkatan Kelas</label>
                                 <select name="tingkat_kelas" id="tingkat_kelas" class="form-control">
-                                    <option value="0">Tingkat Kelas</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
+                                    <option value="">Tingkat Kelas</option>
+                                    @foreach($jenjang as $rj)
+                                        <option value="{{ $rj->level }}">{{ $rj->level }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -177,7 +154,7 @@
                             <div class="position-relative form-group">
                                 <label for="jurusan_kelas" class="">Jurusan</label>
                                 <select name="jurusan_kelas" id="jurusan_kelas" class="form-control">
-                                    <option value="0">Jurusan</option>
+                                    <option value="">Jurusan</option>
                                     <option value="IPA">IPA</option>
                                     <option value="IPS">IPS</option>
                                     <option value="BAHASA">BAHASA</option>
@@ -231,7 +208,7 @@
                         <div class="col-md-6">
                             <div class="position-relative form-group">
                                 <label for="kode_kelas_edit" class="">Kode Kelas</label>
-                                <input name="kode_kelas" id="kode_kelas_edit" placeholder="Kode Kelas" type="text" class="form-control">
+                                <input name="kode_kelas" id="kode_kelas_edit" placeholder="Kode Kelas" type="text" class="form-control" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -246,10 +223,10 @@
                             <div class="position-relative form-group">
                                 <label for="tingkat_kelas_edit" class="">Tingkatan Kelas</label>
                                 <select name="tingkat_kelas" id="tingkat_kelas_edit" class="form-control">
-                                    <option value="0">Tingkat Kelas</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
+                                    <option value="">Tingkat Kelas</option>
+                                    @foreach($jenjang as $rj)
+                                        <option value="{{ $rj->level }}">{{ $rj->level }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -257,7 +234,7 @@
                             <div class="position-relative form-group">
                                 <label for="jurusan_kelas_edit" class="">Jurusan</label>
                                 <select name="jurusan_kelas" id="jurusan_kelas_edit" class="form-control">
-                                    <option value="0">Jurusan</option>
+                                    <option value="">Jurusan</option>
                                     <option value="IPA">IPA</option>
                                     <option value="IPS">IPS</option>
                                     <option value="BAHASA">BAHASA</option>
@@ -295,11 +272,54 @@
 
 @section('js')
 <script>
+    $('#kelas-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{url("kelas/ajax_get_kelas")}}',
+        aoColumns: [
+            {
+                "data": "id",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            { "data": "kode_kelas" },
+            { "data": "nama_kelas" },
+            { "data": "tingkat_kelas" },
+            { "data": "jurusan_kelas" },
+            {
+                "mData": "guru.nama_guru",
+                "mRender": function (data, type, row) {
+                    var html = ``;
+                    if(data != null){
+                        html += data;
+                    }else{
+                        html += `
+                            <div class="badge badge-info">Belum diatur wali kelas</div>
+                        `;
+                    }
+
+                    return html;
+                }
+            },
+            {
+                "mData": "id",
+                "mRender": function (data, type, row) {
+                    var html = `
+                        <button class="btn btn-sm btn-success" onclick="editKelas(`+ data +`)"><i class="fa fa-edit"></i> Ubah</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteKelas(`+ data +`)"><i class="fa fa-trash"></i> Hapus</button>
+                    `;
+                    return html;
+                }
+            }
+        ]
+    });
+
     $(".pilih-walikelas").on('change', function(){
         if($(this).is(':checked')){
-            $(".select-walikelas").css('display', 'block');
+            $(".select-walikelas").slideDown();
         }else{
-            $(".select-walikelas").css('display', 'none');
+            $(".select-walikelas").slideUp();
         }
     });
     $("#tambah-kelas").submit(function(e){
@@ -316,15 +336,24 @@
             },
             success: function(response){
                 $(".loader").hide();
-                if(response.result == true){
-                    Swal.fire(
-                        response.message.head,
-                        response.message.body,
-                        'success'
-                    );
+                
+                if(response.result == false)
+                {
+                    var form_error = response.form_error;
+                    if(form_error.length > 0){
+                        for(i = 0; i < form_error.length; i++){
+                            toastr.error(form_error[i], response.message.head);
+                        }
+                    }else{
+                        Swal.fire(
+                            response.message.head,
+                            response.message.body,
+                            'error'
+                        );
+                    }
+                }
 
-                    window.location.href = response.redirect;
-                }else{
+                if(response.result == true){
                     Swal.fire(
                         response.message.head,
                         response.message.body,
@@ -354,15 +383,24 @@
             },
             success: function(response){
                 $(".loader").hide();
-                if(response.result == true){
-                    Swal.fire(
-                        response.message.head,
-                        response.message.body,
-                        'success'
-                    );
+                
+                if(response.result == false)
+                {
+                    var form_error = response.form_error;
+                    if(form_error.length > 0){
+                        for(i = 0; i < form_error.length; i++){
+                            toastr.error(form_error[i], response.message.head);
+                        }
+                    }else{
+                        Swal.fire(
+                            response.message.head,
+                            response.message.body,
+                            'error'
+                        );
+                    }
+                }
 
-                    window.location.href = response.redirect;
-                }else{
+                if(response.result == true){
                     Swal.fire(
                         response.message.head,
                         response.message.body,
@@ -450,6 +488,15 @@
                 $("#wali_kelas_edit").val(response.data.wali_kelas);
                 $("#id_kelas_edit").val(response.data.id);
                 $("#wali_kelas_edit").val(response.data.wali_kelas);
+
+                if(response.data.wali_kelas != null && response.data.wali_kelas != 0)
+                {
+                    $(".pilih-walikelas").prop('checked', true);
+                    $(".select-walikelas").css('display', 'block');
+                }else{
+                    $(".pilih-walikelas").prop('checked', false);
+                    $(".select-walikelas").css('display', 'none');
+                }
             },
             error: function(){
                 alert('Error Data!');

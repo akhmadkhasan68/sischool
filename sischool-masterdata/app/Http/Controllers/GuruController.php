@@ -288,12 +288,11 @@ class GuruController extends Controller
 
     public function ajax_get_guru_by_id(Request $request)
     {
-        $row = Guru::find($request->id);
+        $row = Guru::with('user')->where('id', $request->id)->first();
 
         $json_data = [
             'result' => true,
-            'data' => $row,
-            'data2' => $row->user
+            'data' => $row
         ];
         return json_encode($json_data);
     }
