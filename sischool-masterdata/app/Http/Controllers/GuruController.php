@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Validator;
+use DataTables;
 use App\Guru;
 use App\User;
-use Illuminate\Validation\Rule;
-use Carbon\Carbon;
 use Image;
 use File;
-use Illuminate\Support\Facades\Hash;
 
 class GuruController extends Controller
 {
@@ -26,6 +27,13 @@ class GuruController extends Controller
         $data['result'] = Guru::all();
 
         return view('guru.data_guru', $data);
+    }
+
+    public function ajax_get_guru()
+    {
+        $data = Guru::all();
+
+        return Datatables::of($data)->make(true);
     }
 
     private function upload_image($file)

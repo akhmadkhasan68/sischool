@@ -52,25 +52,6 @@
             </div>
         </div>
 
-        <!-- <div class="row mb-3">
-            <div class="col-md-6">
-                <select name="filter_jurusan" id="filter_jurusan" class="form-control">
-                    <option value="0">Filter Jurusan</option>
-                    <option value="IPA">IPA</option>
-                    <option value="IPS">IPS</option>
-                    <option value="BAHASA">BAHASA</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <select name="filter_tingkat" id="filter_tingkat" class="form-control">
-                    <option value="0">Filter Tingkatan</option>
-                    @foreach($jenjang as $rj)
-                        <option value="{{ $rj->level }}">{{ $rj->level }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div> -->
-
         <div class="row">
             <div class="col-md-12 col-lg-12 col-12">
                 <div class="main-card mb-3 card">
@@ -453,7 +434,7 @@
                             Swal.fire(
                                 response.message.head,
                                 response.message.body,
-                                'error  '
+                                'error'
                             );
 
                             //window.location.href = response.redirect;

@@ -37,7 +37,7 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
                                         <label for="exampleEmail11" class="">Kode Jurusan</label> <span class="text-danger">*</span>
-                                        <input name="kode_jurusan" placeholder="Masukkan kode jurusan" type="text" class="form-control" value="{{ $row->kode_jurusan }}">
+                                        <input name="kode_jurusan" placeholder="Masukkan kode jurusan" type="text" class="form-control" value="{{ $row->kode_jurusan }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

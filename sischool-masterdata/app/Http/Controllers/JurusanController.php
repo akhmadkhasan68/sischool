@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use App\Jurusan;
+use DataTables;
 
 class JurusanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $data['nav_active'] = 'jurusan';
@@ -17,6 +23,13 @@ class JurusanController extends Controller
         $data['jurusan'] = Jurusan::all();
         
         return view('jurusan.data_jurusan', $data);
+    }
+
+    public function ajax_get_jurusan()
+    {
+        $data = Jurusan::all();
+
+        return Datatables::of($data)->make(true);
     }
 
     public function add_jurusan()

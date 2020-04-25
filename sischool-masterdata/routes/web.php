@@ -29,8 +29,19 @@ Route::patch('/kelas', 'KelasController@ajax_action_edit_kelas');
 Route::delete('/kelas', 'KelasController@ajax_action_delete_kelas');
 Route::get('/kelas/ajax_get_kelas_by_id', 'KelasController@ajax_get_kelas_by_id');
 
+//ROUTE FOR MAPEL
+Route::get('/mapel', 'MapelController@index');
+Route::get('/mapel/ajax_get_mapel', 'MapelController@ajax_get_mapel');
+Route::get('/mapel/ajax_get_mapel_by_id', 'MapelController@ajax_get_mapel_by_id');
+Route::post('/mapel/ajax_action_add_mapel', 'MapelController@ajax_action_add_mapel');
+Route::patch('/mapel', 'MapelController@ajax_action_edit');
+Route::delete('mapel', 'MapelController@ajax_action_delete');
+
+
+
 //ROUTE FOR JURUSAN
 Route::get('/jurusan', 'JurusanController@index');
+Route::get('/jurusan/ajax_get_jurusan', 'JurusanController@ajax_get_jurusan');
 Route::delete('/jurusan', 'JurusanController@ajax_action_delete_jurusan');
 Route::get('/jurusan/tambah', 'JurusanController@add_jurusan');
 Route::post('/jurusan/tambah', 'JurusanController@ajax_action_add_jurusan');
@@ -45,6 +56,7 @@ Route::get('/ortu', 'OrtuController@index')->name('ortu');
 
 //ROUTE FOR GURU
 Route::get('/guru', 'GuruController@index')->name('guru');
+Route::get('/guru/ajax_get_guru', 'GuruController@ajax_get_guru');
 Route::post('/guru', 'GuruController@ajax_action_add_guru');
 Route::get('/guru/ajax_get_guru_by_id', 'GuruController@ajax_get_guru_by_id');
 Route::delete('/guru', 'GuruController@ajax_action_delete_guru');

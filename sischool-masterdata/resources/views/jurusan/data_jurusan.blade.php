@@ -56,32 +56,22 @@
             <div class="col-md-12">
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Data Jurusan</h5>
-                        <table class="mb-0 table">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Kode Jurusan</th>
-                                <th>Nama Jurusan</th>
-                                <th>Aksi</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    $no = 1;
-                                ?>
-                                @foreach($jurusan as $row )
-                                    <tr>
-                                        <th scope="row"><?php echo $no++;?></th>
-                                        <td>{{ $row->kode_jurusan }}</td>
-                                        <td>{{ $row->nama_jurusan }}</td>
-                                        <td>
-                                            <a href="{{ url('kelas/edit/') }}/{{ $row->id }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Ubah</a>
-                                            <button class="btn btn-sm btn-danger" onclick="deleteKelas('{{ $row->id }}')"><i class="fa fa-trash"></i> Hapus</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="jurusan-table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Kode Jurusan</th>
+                                                <th>Nama Jurusan</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,6 +89,32 @@
 
 @section('js')
 <script>
+    $("#jurusan-table").DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{url("jurusan/ajax_get_jurusan")}}',
+        aoColumns: [
+            {
+                "data": "id",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            { "data" : "kode_jurusan"},
+            { "data" : "nama_jurusan"},
+            {
+                "mData": "id",
+                "mRender": function (data, type, row) {
+                    var html = `
+                        <a href="{{ url('kelas/edit/') }}/`+ data +`" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Ubah</a>
+                        <button class="btn btn-sm btn-danger" onclick="deleteKelas('`+ data +`')"><i class="fa fa-trash"></i> Hapus</button>
+                    `;
+                    return html;
+                }
+            }
+        ]
+    });
+
     function deleteKelas(id)
     {
         Swal.fire({

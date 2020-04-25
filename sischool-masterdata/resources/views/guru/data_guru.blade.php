@@ -61,7 +61,7 @@
                         <div class="row">
                             <div class="col-md-12 col-12">
                                 <div class="table-responsive">
-                                    <table class="table table-">
+                                    <table class="table table-bordered" id="my-table">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -72,29 +72,6 @@
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php $no = 1 ?>
-                                            @foreach($result as $row)
-                                            <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $row->nama_guru }}</td>
-                                                <td>{{ $row->nip_guru }}</td>
-                                                <td>
-                                                    @if($row->jk_guru == "L")
-                                                        Laki - laki
-                                                    @else
-                                                        Perempuan
-                                                    @endif
-                                                </td>
-                                                <td>{{ $row->no_guru }}</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" onclick="detail({{ $row->id }})"><i class="fa fa-info"></i> Detail</button>
-                                                    <button class="btn btn-success btn-sm" onclick="edit({{ $row->id }})"><i class="fa fa-edit"></i> Ubah</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $row->user_id }})"><i class="fa fa-trash"></i> Hapus</button>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -344,6 +321,47 @@
 
 @section('js')
     <script>
+        $("#my-table").DataTable({
+            processing: true, 
+            serverSide: true, 
+            ajax: '{{url("guru/ajax_get_guru")}}',
+            aoColumns: [
+                {
+                    "data": "id",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {"data":"nama_guru"},
+                {"data":"nip_guru"},
+                {
+                    "data":"jk_guru",
+                    render: function(data, type, row, meta){
+                        if(data == "L")
+                        {
+                            return "Laki-laki";
+                        }
+                        else
+                        {
+                            return "Perempuan";
+                        }
+                    }
+                },
+                {"data": "no_guru"},
+                { "data": function (data, type, dataToSet) {
+                    var html = `
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="detail(`+ data.id +`)"><i class="fa fa-info"></i> Detail</button>
+                            <button class="btn btn-success btn-sm" onclick="edit(`+ data.id +`)"><i class="fa fa-edit"></i> Ubah</button>
+                            <button class="btn btn-danger btn-sm" onclick="hapus(`+ data.user_id +`)"><i class="fa fa-trash"></i> Hapus</button>
+                        </td>
+                    `;
+                    return html;
+                    }
+                }
+            ]
+        });
+
         function detail(id)
         {
             $.ajax({
@@ -430,8 +448,8 @@
                         $("#jk_guru_edit_2").prop('checked', true);
                     }
 
-                    $("#username_edit").val(response.data.username);
-                    $("#email_edit").val(response.data.email);
+                    $("#username_edit").val(response.data.user.username);
+                    $("#email_edit").val(response.data.user.email);
                     $("#no_guru_edit").val(response.data.no_guru);
                     $("#alamat_guru_edit").val(response.data.alamat_guru);
                     $("#kota_guru_edit").val(response.data.kota_guru);
