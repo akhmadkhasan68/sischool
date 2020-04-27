@@ -95,4 +95,30 @@ class MapelGuruController extends Controller
 
         return json_encode($json_data);
     }
+
+    public function ajax_action_delete(Request $request)
+    {
+        $delete = MapelGuru::destroy($request->id);
+
+        if(!$delete)
+        {   
+            $json_data = [
+                'result' => false,
+                'form_error' => '',
+                'message' => ['head' => 'Gagal', 'body' => 'Ada kesalahan saat menghapus data. Lakukan beberapa saat lagi!'],
+                'redirect' => ''
+            ];
+            return json_encode($json_data);
+            die();
+        }
+
+        $json_data = [
+            'result' => true,
+            'form_error' => '',
+            'message' => ['head'=>'Berhasil', 'body' => 'Selamat, anda berhasil menghapus data mapel ini!'],
+            'redirect' => '/mapel_guru'
+        ];
+
+        return json_encode($json_data);
+    }
 }
