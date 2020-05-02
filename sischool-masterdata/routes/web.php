@@ -68,6 +68,14 @@ Route::get('/mapel_guru/ajax_get_mapel', 'MapelGuruController@ajax_get_mapel');
 Route::post('/mapel_guru', 'MapelGuruController@ajax_action_add');
 Route::delete('/mapel_guru', 'MapelGuruController@ajax_action_delete');
 
+//ROUTE FOR KELAS AJAR GURU
+Route::get('/kelas_ajar_guru', 'KelasAjarController@index');
+Route::get('/kelas_ajar_guru/ajax_get_kelas_ajar', 'KelasAjarController@ajax_get_kelas_ajar');
+Route::get('/kelas_ajar_guru/ajax_search_mapel_guru_by_guru', 'KelasAjarController@ajax_search_mapel_guru_by_guru');
+Route::get('/kelas_ajar_guru/ajax_search_mapel_guru_by_id_mapel', 'KelasAjarController@ajax_search_mapel_guru_by_id_mapel');
+Route::post('/kelas_ajar_guru', 'KelasAjarController@ajax_action_add');
+Route::delete('/kelas_ajar_guru', 'KelasAjarController@ajax_action_delete');
+
 //ROUTE FOR PENGATURAN SEKOLAH
 Route::get('/pengaturan_sekolah', 'SekolahSettingController@index');
 Route::patch('/pengaturan_sekolah', 'SekolahSettingController@ajax_action_update_sekolah');

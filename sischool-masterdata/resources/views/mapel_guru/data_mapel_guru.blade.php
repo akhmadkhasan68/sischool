@@ -38,7 +38,7 @@
                             <div class="widget-subheading">Mata Pelajaran Guru yang terdaftar</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-white"><span></span></div>
+                            <div class="widget-numbers text-white"><span>{{count($gurus)}}</span></div>
                         </div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
 
 @section('js')
 <script>
-     $("#my-table").DataTable({
+    $("#my-table").DataTable({
         processing: true,
         serverSide: true,
         ajax: '{{url("mapel_guru/ajax_get_mapel")}}',
