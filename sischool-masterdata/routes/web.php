@@ -35,9 +35,15 @@ Route::get('/mapel/ajax_get_mapel', 'MapelController@ajax_get_mapel');
 Route::get('/mapel/ajax_get_mapel_by_id', 'MapelController@ajax_get_mapel_by_id');
 Route::post('/mapel/ajax_action_add_mapel', 'MapelController@ajax_action_add_mapel');
 Route::patch('/mapel', 'MapelController@ajax_action_edit');
-Route::delete('mapel', 'MapelController@ajax_action_delete');
+Route::delete('/mapel', 'MapelController@ajax_action_delete');
 
-
+//ROUTE FOR SISWA
+Route::get('/siswa', 'SiswaController@index')->name('siswa');
+Route::get('/siswa/ajax_get_siswa', 'SiswaController@ajax_get_siswa');
+Route::get('/siswa/ajax_get_siswa_by_id', 'SiswaController@ajax_get_siswa_by_id');
+Route::post('/siswa', 'SiswaController@ajax_action_add');
+Route::patch('/siswa', 'SiswaController@ajax_action_edit');
+Route::delete('/siswa', 'SiswaController@ajax_action_delete');
 
 //ROUTE FOR JURUSAN
 Route::get('/jurusan', 'JurusanController@index');
@@ -47,9 +53,6 @@ Route::get('/jurusan/tambah', 'JurusanController@add_jurusan');
 Route::post('/jurusan/tambah', 'JurusanController@ajax_action_add_jurusan');
 Route::patch('/jurusan/edit', 'JurusanController@ajax_action_edit_jurusan');
 Route::get('kelas/edit/{id}', 'JurusanController@edit_jurusan');
-
-//ROUTE FOR SISWA
-Route::get('/siswa', 'SiswaController@index')->name('siswa');
 
 //ROUTE FOR ORTU
 Route::get('/ortu', 'OrtuController@index')->name('ortu');

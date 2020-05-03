@@ -66,7 +66,9 @@ class GuruController extends Controller
                 'required',
                 Rule::unique('table_guru'),
                 'max:255',
-                'min:5'
+                'min:5',
+                'without_spaces',
+                'numeric'
             ],
             'jk_guru' => 'required',
             'username' => [
@@ -83,7 +85,8 @@ class GuruController extends Controller
                 'required',
                 Rule::unique('table_guru'),
                 'min:9',
-                'max:13'
+                'max:13',
+                'numeric'
             ],
             'alamat_guru' => 'required',
             'kota_guru' => 'required',

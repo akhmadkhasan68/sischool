@@ -437,7 +437,7 @@
                 },
                 success: function(response){
                     $(".loader").hide();
-                    console.log(response);
+                    
                     $("#edit-button").click();
                     $("#nama_guru_edit").val(response.data.nama_guru);
                     $("#nip_guru_edit").val(response.data.nip_guru);
