@@ -61,23 +61,28 @@ class OrtuController extends Controller
             'nama_ortu' => 'required',
             'siswa_nis' => [
                 'required',
-                'exists:App\Siswa,nis_siswa'
+                'exists:App\Siswa,nis_siswa',
+                'min:5',
+                'without_spaces',
+                'numeric'
             ],
             'pendidikan_ortu' => 'required',
             'pekerjaan_ortu' => 'required',
             'gaji_ortu' => 'required',
             'status_hubungan' => [
                 'required',
-                Rule::unique('table_siswa_ortu')->where(function ($query) {
-                    return $query->where('status_hubungan');
-                })
+                Rule::unique('table_siswa_ortu')->where('siswa_nis', $request->siswa_nis)
             ],
             'jk_ortu' => 'required',
             'username' => [
                 Rule::unique('users')
             ],
             'password' => 'max:255|min:5',
-            'no_ortu' => 'required',
+            'no_ortu' => [
+                'required',
+                Rule::unique('table_siswa_ortu'),
+                'numeric'
+            ],
             'email' => [
                 'required',
                 Rule::unique('users')

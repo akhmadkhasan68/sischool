@@ -67,6 +67,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama</th>
+                                                <th>Status Hubungan</th>
                                                 <th>NIS Anak</th>
                                                 <th>Nama Anak</th>
                                                 <th>Aksi</th>
@@ -250,6 +251,7 @@
                 }
             },
             { "data": "nama_ortu" },
+            { "data": "status_hubungan" },
             { "data": "siswa_nis" },
             { "data": "siswa.nama_siswa" },
             { "data": function (data, type, dataToSet) {
