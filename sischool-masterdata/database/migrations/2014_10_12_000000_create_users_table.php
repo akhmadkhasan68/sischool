@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->tinyInteger('si_masterdata')->default('1');
-            $table->enum('level', ['ADMIN', 'OPERATOR', 'GURU', 'SISWA']);
+            $table->enum('level', ['ADMIN', 'OPERATOR', 'GURU', 'SISWA', 'ORTU']);
             $table->timestamps();
         });
     }

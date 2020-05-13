@@ -56,6 +56,9 @@ Route::get('kelas/edit/{id}', 'JurusanController@edit_jurusan');
 
 //ROUTE FOR ORTU
 Route::get('/ortu', 'OrtuController@index')->name('ortu');
+Route::post('/ortu', 'OrtuController@ajax_action_add');
+Route::get('/ortu/ajax_get_ortu', 'OrtuController@ajax_get_ortu')->name('ortu');
+
 
 //ROUTE FOR GURU
 Route::get('/guru', 'GuruController@index')->name('guru');
