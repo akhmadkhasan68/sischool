@@ -596,7 +596,7 @@
             },
             success: function(response){
                 $(".loader").hide();
-                console.log(response);
+                
                 if(response.data.foto_siswa != ""){
                     var images =  'uploads/photos/' + response.data.foto_siswa;
                 }else{

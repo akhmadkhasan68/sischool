@@ -28,4 +28,9 @@ class Ortu extends Model
     {
         return $this->hasOne('App\Siswa', 'nis_siswa', 'siswa_nis');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id_user');
+    }
 }
