@@ -93,3 +93,9 @@ Route::patch('/pengaturan_sekolah/update_ppdb', 'SekolahSettingController@ajax_a
 //ROUTE FOR PENGATURAN AKUN
 Route::get('/pengaturan_akun', 'AccountSettingController@index');
 Route::patch('/pengaturan_akun', 'AccountSettingController@ajax_action_edit_account');
+
+//ROUTE FOR PENGATURAN HAK AKSES
+Route::get('pengaturan_akses', 'AksesController@index');
+Route::get('pengaturan_akses/ajax_get_user', 'AksesController@ajax_get_user');
+Route::get('pengaturan_akses/ajax_get_user_by_id', 'AksesController@ajax_get_user_by_id');
+Route::patch('pengaturan_akses/ajax_action_ubah_akses', 'AksesController@ajax_action_ubah_akses');
