@@ -11,6 +11,7 @@ class AksesController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('admin');
         $this->middleware('auth');
     }
 
@@ -29,7 +30,7 @@ class AksesController extends Controller
 
         $data = User::where([
             ['id', '!=', $user_id], 
-            // ['level', 'ADMIN']
+            ['level', 'ADMIN']
         ])->get();
 
         return Datatables::of($data)->make(true);
